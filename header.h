@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/10/25 16:09:46 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:40:50 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 typedef enum s_error_code
 {
 	EXIT_ARG_COUNT_ERROR = 200,
-   	EXIT_INVALID_ARGS = 201,
+	EXIT_INVALID_ARGS = 201,
+	EXIT_ARG_NAME_ERROR = 202,
 }	t_error;
 
 typedef struct s_map_data
 {
-    char    **map;
-    char    **copy;
-    
+	char    **map;
+	char    **copy;
+
 }   t_map_data;
 
 /* ************************************************************************** */
