@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/11/01 14:42:43 by jbremser         ###   ########.fr        #
+#    Updated: 2024/11/01 17:09:07 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ HEADER		=	header.h
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
-SRCS		=	$(addprefix $(SRCDIR)/, $(SRCFILES))
+SRCS		=	$(addprefix $(SRCDIR)/, $(FILES))
 
 OBJS		=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
@@ -41,7 +41,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HEADER)
 				@cc $(FLAGS) -o $@ -c $<
 
 $(NAME):		$(OBJS) $(LIBFT)
-				@cc $(HEADER) $(OBJS) $(LIBFT) $(NAME)
+				@cc $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) 
 				@echo "$(ANSI_CYAN)Compilation Complete: $(NAME) $(ANSI_RESET)"
 
 $(LIBFT):		

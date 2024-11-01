@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/10/29 15:40:50 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:11:17 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include "./MLX42/include/MLX42/MLX42.h"
 # include <unistd.h>
+# include <stdio.h>
 
 typedef enum s_error_code
 {
