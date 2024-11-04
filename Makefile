@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/11/01 17:09:07 by jbremser         ###   ########.fr        #
+#    Updated: 2024/11/04 14:13:14 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME		=	cub3d
 FLAGS		=	-Wall -Wextra -Werror -g
 
 FILES		=	main.c \
-				error_handling.c
+				error_handling.c \
+				map_init.c
 
 SRCDIR		=	srcs
 OBJDIR		=	objs
