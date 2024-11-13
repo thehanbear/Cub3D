@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/13 13:34:58 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:55:45 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,34 @@ void	free_array(char **str)
 	free(str);
 }
 
+void clean_info_struct(t_map_data	*game)
+{
+	if (game->copy)
+		free_array(game->copy);
+	if (game->info)
+		free_array(game->info);
+}
+
+void free_string(char *str)
+{
+    if (str)
+        free(str);
+}
+
 void	free_game_struct(t_map_data	*game)
 {
 	if (game->copy)
 		free_array(game->copy);
 	if (game->info)
 		free_array(game->info);
+	if (game->map)
+		free_array(game->map);	
+	free_string(game->n_wall_asset);
+	free_string(game->s_wall_asset);
+	free_string(game->e_wall_asset);
+	free_string(game->w_wall_asset);
+	free_string(game->ceiling_color);	
+	free_string(game->floor_color);
 	if (game)
 		free(game);
 }
@@ -38,6 +60,8 @@ void	map_free_error(int errno, t_map_data	*game)
 		printf("Error: Calloc fail\n");
 	if (errno == EXIT_FD_OPEN_ERROR)
 		printf("FD NO OPEN!\n");
+	if (errno == EXIT_NO_MAP)
+		printf("WHERE MAP!\n");
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -54,6 +78,8 @@ int	handle_error(int errno, t_map_data *game)
 	if (errno == EXIT_MAP_INIT_CALLOC_FAIL)
 		map_free_error(errno, game);
 	if (errno == EXIT_FD_OPEN_ERROR)
+		map_free_error(errno, game);
+	if (errno == EXIT_NO_MAP)
 		map_free_error(errno, game);
 	if (game)
 		free_game_struct(game);
