@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/13 13:33:33 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:53:49 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,31 @@ typedef enum s_error_code
 	EXIT_MAP_INIT_ERROR = 203,
 	EXIT_MAP_INIT_CALLOC_FAIL = 204,
 	EXIT_FD_OPEN_ERROR = 205,
+	EXIT_NO_MAP = 206, 
 }	t_error;
 
 typedef struct s_map_data
 {
 	char    **info;
-	char	**maze_map;
 	char    **copy;
 	int		rows;
+	int		map_rows;
+	char	*floor_color;
+	char	*ceiling_color;
+	char	*n_wall_asset;
+	char	*s_wall_asset;
+	char	*e_wall_asset;
+	char	*w_wall_asset;
+	char	**map;
 
 }   t_map_data;
 
 /* ************************************************************************** */
 /*									error_handling							  */
 /* ************************************************************************** */
-int	handle_error(int errno, t_map_data *game);
+int		handle_error(int errno, t_map_data *game);
+void	clean_info_struct(t_map_data	*game);
+
 
 /* ************************************************************************** */
 /*									map_init								  */
