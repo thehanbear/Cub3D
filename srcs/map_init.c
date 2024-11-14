@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/13 17:56:47 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:50:13 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	map_rows(char *arg)
 	return (i);
 }
 
-static char	**map_to_str(t_map_data *game, char *argv)
+void map_to_str(t_map_data *game, char *argv)
 {
 	int			fd;
 	int			i;
@@ -88,7 +88,7 @@ static char	**map_to_str(t_map_data *game, char *argv)
 		i++;
 	}
 	close (fd);
-	return (game->info);
+	// return (game->info);
 }
 
 char	*find_asset(t_map_data	*game, char	*arg)
@@ -137,11 +137,12 @@ void find_ones(t_map_data *game)
     int x = 0;
 	if (find_no_map(game))
 		handle_error(EXIT_NO_MAP, game);
-    while (game->info[y])
+    while (y < game->rows && game->info[y])
     {
         x = 0;
         while (game->info[y][x] && game->info[y][x] == ' ')
             x++;
+		game->map_rows = game->rows - y + 1;
         if (game->info[y][x] && game->info[y][x] == '1')
         {
             game->map = (char **)ft_calloc((game->rows - y + 1), sizeof(char *));
@@ -150,10 +151,9 @@ void find_ones(t_map_data *game)
             while (game->info[y])
             {
                 game->map[a] = ft_strdup(game->info[y]);
-                a++;
+				a++;
                 y++;
             }
-            game->map_rows = a;
         }
         y++;
     }
@@ -226,7 +226,7 @@ static int	map_parse(char **argv, t_map_data	*game)
 	    game->rows = 0;
         return (1);
     }
-	game->info = map_to_str(game, argv[1]);
+	map_to_str(game, argv[1]);
 	find_map(game);
 	clean_info_struct(game);
 	printf("after clean_info_struct\n");
