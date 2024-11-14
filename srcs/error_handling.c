@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/13 17:55:45 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:37:52 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,39 @@ void	free_array(char **str)
 
 	y = 0;
 	while (str[y])
+	{
+		// printf("to be freed: %s\n", str[y]);
 		free(str[y++]);
+	}
 	free(str);
 }
 
 void clean_info_struct(t_map_data	*game)
 {
-	if (game->copy)
-		free_array(game->copy);
+	// if (game->copy)
+	// 	free_array(game->copy);
 	if (game->info)
 		free_array(game->info);
 }
 
 void free_string(char *str)
 {
+	// printf("to be freed: %s\n", str);
     if (str)
         free(str);
 }
 
 void	free_game_struct(t_map_data	*game)
 {
-	if (game->copy)
-		free_array(game->copy);
-	if (game->info)
-		free_array(game->info);
+	// if (game->copy)
+	// 	free_array(game->copy);
+	// if (game->info)
+	// 	free_array(game->info);
 	if (game->map)
+	{
+		// printf("\nmap exists\n");
 		free_array(game->map);	
+	}
 	free_string(game->n_wall_asset);
 	free_string(game->s_wall_asset);
 	free_string(game->e_wall_asset);
@@ -81,8 +88,6 @@ int	handle_error(int errno, t_map_data *game)
 		map_free_error(errno, game);
 	if (errno == EXIT_NO_MAP)
 		map_free_error(errno, game);
-	if (game)
-		free_game_struct(game);
 	if (errno == 0)
 		return (0);
 	else

@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:51:35 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/13 16:24:52 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:37:32 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ int main(int argc, char **argv)
 	game = ft_calloc(1, sizeof(t_map_data));
 	if (argc != 2 || !argv)
 		return (handle_error(EXIT_ARG_COUNT_ERROR, game));
-	if (handle_error(parse_args(argv, game), game))
+	if (!handle_error(parse_args(argv, game), game))
 		return (1);
+	printf("\nhere\n");	
+	if (game)
+		free_game_struct(game);		
 	
 }
 
