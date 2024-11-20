@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/13 17:53:49 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:55:02 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef enum s_error_code
 typedef struct s_map_data
 {
 	char    **info;
-	char    **copy;
 	int		rows;
 	int		map_rows;
 	char	*floor_color;
@@ -51,6 +50,8 @@ typedef struct s_map_data
 /* ************************************************************************** */
 int		handle_error(int errno, t_map_data *game);
 void	clean_info_struct(t_map_data	*game);
+void	free_game_struct(t_map_data	*game);
+
 
 
 /* ************************************************************************** */
