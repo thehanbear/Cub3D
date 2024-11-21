@@ -21,7 +21,7 @@ float	angle_norm(float angle)
 	return (angle);
 }
 
-void	draw_background(t_game *game, int col, int t_pix, int b_pix)
+void	draw_background(t_map_data *game, int col, int t_pix, int b_pix)
 {
 	int		i;
 
@@ -52,7 +52,7 @@ int	get_wall_color(t_ray *ray)
 	}
 }
 
-void	draw_column(t_game *game, t_ray *ray, int col)
+void	draw_column(t_map_data *game, t_ray *ray, int col)
 {
 	double	wall_h;
 	double	bottom;

@@ -60,21 +60,6 @@ typedef struct s_player
 	float	fov_radians;
 }	t_player;
 
-typedef struct s_map_data
-{
-	char    **info;
-	int		rows;
-	int		map_rows;
-	char	*floor_color;
-	char	*ceiling_color;
-	char	*n_wall_asset;
-	char	*s_wall_asset;
-	char	*e_wall_asset;
-	char	*w_wall_asset;
-	char	**map;
-
-}   t_map_data;
-
 typedef struct s_texture
 {
 	mlx_texture_t	*no;
@@ -90,10 +75,19 @@ typedef struct s_ray
 	double	distance;
 }	t_ray;
 
-typedef struct s_game
+typedef struct s_map_data
 {
+	char    **info;
+	int		rows;
+	int		map_rows;
+	char	*floor_color;
+	char	*ceiling_color;
+	char	*n_wall_asset;
+	char	*s_wall_asset;
+	char	*e_wall_asset;
+	char	*w_wall_asset;
+	char	**map;
 	mlx_t		*mlx;
-	t_map_data	map;
 	int			p_x;
 	int			p_y;
 	int			w_map;
@@ -101,8 +95,7 @@ typedef struct s_game
 	t_player	player;
 	t_texture	textures;
 	mlx_image_t	*image;
-}	t_game;
-
+}   t_map_data;
 
 /* ************************************************************************** */
 /*									error_handling							  */
@@ -111,12 +104,10 @@ int		handle_error(int errno, t_map_data *game);
 void	clean_info_struct(t_map_data	*game);
 void	free_game_struct(t_map_data	*game);
 
-
 /* ************************************************************************** */
 /*									map_init								  */
 /* ************************************************************************** */
 int	parse_args(char **argv, t_map_data	*game);
-
 
 /* ************************************************************************** */
 /*									raycasting								  */
@@ -135,29 +126,28 @@ int			vec_equal(t_vector v1, t_vector v2);
 double		vec_angle(t_vector v);
 t_vector	vec_rotate(t_vector v, int angle);
 void		vec_print(t_vector v);
-void		start_game(t_game *game);
-void		init_game(t_game *game);
-void 		init_player(t_game *game);
-void 		raycasting(t_game *game);
-void 		draw_column(t_game *game, t_ray *ray, int col);
+void		start_game(t_map_data *game);
+void		init_game(t_map_data *game);
+void 		init_player(t_map_data *game);
+void 		raycasting(t_map_data *game);
+void 		draw_column(t_map_data *game, t_ray *ray, int col);
 float angle_norm(float angle);
-int load_textures(t_game *game);
-void calculate_ray_distance(t_game *game);
-void calculate_ray_data(t_game *game, double ray_offset);
-void set_vertical_texture(t_game *game);
-void set_horizontal_texture(t_game *game);
-void zoom_in(t_game *game);
-void zoom_out(t_game *game);
+int load_textures(t_map_data *game);
+void calculate_ray_distance(t_map_data *game);
+void calculate_ray_data(t_map_data *game, double ray_offset);
+void set_vertical_texture(t_map_data *game);
+void set_horizontal_texture(t_map_data *game);
+void zoom_in(t_map_data *game);
+void zoom_out(t_map_data *game);
 uint32_t get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y);
 void set_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
 uint32_t rgba(int r, int g, int b, int a);
 uint32_t hex_to_int(const char *hex);
 void mlx_key(mlx_key_data_t keydata, void *param);
-void game_exit(t_game *game);
-void start_game(t_game *game);
+void game_exit(t_map_data *game);
+void start_game(t_map_data *game);
 void game_loop(void *param);
-void init_player(t_game *game);
-void check_textures(t_game *game);
-
+void init_player(t_map_data *game);
+void check_textures(t_map_data *game);
 
 #endif

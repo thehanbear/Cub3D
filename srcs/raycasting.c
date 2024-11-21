@@ -26,7 +26,7 @@ int	angle_y(float angle)
 	return (false);
 }
 
-int	check_wall(float x, float y, t_game *game)
+int	check_wall(float x, float y, t_map_data *game)
 {
 	int		x_m;
 	int		y_m;
@@ -37,8 +37,8 @@ int	check_wall(float x, float y, t_game *game)
 	y_m = floor (y / TILE_SIZE);
 	if ((y_m >= game->h_map || x_m >= game->w_map))
 		return (0);
-	if (game->map.map[y_m] && x_m <= (int)strlen(game->map.map[y_m]))
-		if (game->map.map[y_m][x_m] == '1')
+	if (game->map[y_m] && x_m <= (int)strlen(game->map[y_m]))
+		if (game->map[y_m][x_m] == '1')
 			return (0);
 	return (1);
 }
@@ -64,7 +64,7 @@ int	check_intersect_v(float angle, double *v_x, double *step_x)
 	return (1);
 }
 
-float	h_intersect(t_game *game, float angle)
+float	h_intersect(t_map_data *game, float angle)
 {
 	t_vector	h;
 	t_vector	step;
@@ -84,7 +84,7 @@ float	h_intersect(t_game *game, float angle)
 	return (vec_len(vec_sub(h, player)));
 }
 
-float	v_intersect(t_game *game, float angle)
+float	v_intersect(t_map_data *game, float angle)
 {
 	t_vector	v;
 	t_vector	step;
@@ -104,7 +104,7 @@ float	v_intersect(t_game *game, float angle)
 	return (vec_len(vec_sub(v, player)));
 }
 
-void	raycasting(t_game *game)
+void	raycasting(t_map_data *game)
 {
 	t_ray		ray;
 	double		h_inter;

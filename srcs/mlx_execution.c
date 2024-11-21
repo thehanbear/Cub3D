@@ -14,7 +14,7 @@
 
 void game_loop(void *param)
 {
-    t_game *game = param;
+    t_map_data *game = param;
 
 	if (game->image != NULL)
     	mlx_delete_image(game->mlx, game->image);
@@ -28,7 +28,7 @@ void game_loop(void *param)
     mlx_image_to_window(game->mlx, game->image, 0, 0);
 }
 
-void start_game(t_game *game)
+void start_game(t_map_data *game)
 {
     game->mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "Cub3D", 0);
 	if (!game->mlx) 
@@ -42,7 +42,7 @@ void start_game(t_game *game)
     mlx_loop(game->mlx);
 }
 
-void game_exit(t_game *game)
+void game_exit(t_map_data *game)
 {
     if (game->image != NULL) 
 	{
@@ -57,7 +57,7 @@ void game_exit(t_game *game)
 
 void mlx_key(mlx_key_data_t keydata, void *param)
 {
-    t_game *game;
+    t_map_data *game;
 
     game = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
