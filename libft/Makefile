@@ -26,7 +26,7 @@ CFILES = ft_memset.c \
 		 ft_strchr.c \
 		 ft_strrchr.c \
 		 ft_strnstr.c \
-		 strcmp.c \
+		 ft_strcmp.c \
 		 ft_strncmp.c \
 		 ft_atoi.c \
 		 ft_itoa.c \

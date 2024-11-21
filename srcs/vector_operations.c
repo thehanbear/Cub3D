@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
+#include "../header.h"
 
 t_vector	vec_add(t_vector v1, t_vector v2)
 {

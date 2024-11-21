@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
+#include "../header.h"
 
 // 텍스처에서 색상을 가져오는 함수
 uint32_t get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y)

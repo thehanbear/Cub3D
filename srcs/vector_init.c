@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_rotate.c                                    :+:      :+:    :+:   */
+/*   vector_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 03:41:08 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/11/15 02:04:48 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/11/14 03:41:20 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/11/15 02:05:05 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
+#include "../header.h"
 
-t_vector	vec_rotate(t_vector v, int angle)
+t_vector	vec_new(double x, double y)
 {
-	t_vector	v_rotated;
+	t_vector	v;
 
-	v_rotated = vec_mul(vec_new(cos(vec_angle(v) + (M_PI / 180 * angle)),
-				-sin(vec_angle(v) + (M_PI / 180 * angle))), vec_len(v));
-	return (v_rotated);
+	v.x = x;
+	v.y = y;
+	return (v);
+}
+
+t_vector	vec_zero(void)
+{
+	t_vector	v;
+
+	v.x = 0;
+	v.y = 0;
+	return (v);
+}
+
+t_vector vec_from_angle(float angle)
+{
+    return vec_new(cos(angle), sin(angle));
 }

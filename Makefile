@@ -14,9 +14,22 @@ NAME		=	cub3d
 
 FLAGS		=	-Wall -Wextra -Werror -g
 
+MLX42		=	MLX42/build/libmlx42.a
+
+MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib"
+
 FILES		=	main.c \
 				error_handling.c \
-				map_init.c
+				map_init.c \
+				mlx_execution.c \
+				utils.c \
+				vector_init.c \
+				vector_operations.c \
+				vector_properties.c \
+				vector_rotate.c \
+				raycasting.c \
+				rendering.c \
+				#coloring.c
 
 SRCDIR		=	srcs
 OBJDIR		=	objs
@@ -42,7 +55,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HEADER)
 				@cc $(FLAGS) -o $@ -c $<
 
 $(NAME):		$(OBJS) $(LIBFT)
-				@cc $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) 
+				@cc $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(MLX42) $(MLX42FLAGS)
 				@echo "$(ANSI_CYAN)Compilation Complete: $(NAME) $(ANSI_RESET)"
 
 $(LIBFT):		
@@ -60,3 +73,5 @@ fclean:			clean
 				@echo "$(ANSI_RED)Executable $(NAME) removed$(ANSI_RESET)"
 
 re:				fclean all
+
+.PHONY: all re clean fclean
