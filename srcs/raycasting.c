@@ -35,8 +35,8 @@ int	check_wall(float x, float y, t_map_data *game)
 		return (0);
 	x_m = floor (x / TILE_SIZE);
 	y_m = floor (y / TILE_SIZE);
-	if ((y_m >= game->h_map || x_m >= game->w_map))
-		return (0);
+	// if ((y_m >= game->map_rows || x_m >= game->map_cols))
+	//  	return (0);
 	if (game->map[y_m] && x_m <= (int)strlen(game->map[y_m]))
 		if (game->map[y_m][x_m] == '1')
 			return (0);

@@ -36,7 +36,6 @@ void start_game(t_map_data *game)
        printf("Failed to initialize mlx\n");
         exit(1);
     }
-    init_player(game);
     mlx_loop_hook(game->mlx, &game_loop, game);
     mlx_key_hook(game->mlx, &mlx_key, game);
     mlx_loop(game->mlx);

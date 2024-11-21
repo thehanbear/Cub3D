@@ -80,6 +80,7 @@ typedef struct s_map_data
 	char    **info;
 	int		rows;
 	int		map_rows;
+	int		map_cols;
 	char	*floor_color;
 	char	*ceiling_color;
 	char	*n_wall_asset;
@@ -88,10 +89,6 @@ typedef struct s_map_data
 	char	*w_wall_asset;
 	char	**map;
 	mlx_t		*mlx;
-	int			p_x;
-	int			p_y;
-	int			w_map;
-	int			h_map;
 	t_player	player;
 	t_texture	textures;
 	mlx_image_t	*image;
