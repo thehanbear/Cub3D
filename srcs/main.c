@@ -24,9 +24,12 @@ int main(int argc, char **argv)
 	if (!handle_error(parse_args(argv, game), game))
 		return (1);
 	printf("\nhere\n");
-	init_game(game);
+	if (!handle_error(init_game(game), game))
+		return (1);
 	start_game(game);
 	// if (game)
-	// 	free_game_struct(game);		
+	// 	free_game_struct(game);
+	return (0);
+
 }
 

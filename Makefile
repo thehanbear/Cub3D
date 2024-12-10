@@ -29,7 +29,7 @@ FILES		=	main.c \
 				vector_rotate.c \
 				raycasting.c \
 				rendering.c \
-				#coloring.c
+				coloring.c
 
 SRCDIR		=	srcs
 OBJDIR		=	objs

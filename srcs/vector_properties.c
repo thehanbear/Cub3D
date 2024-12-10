@@ -20,8 +20,8 @@ double	vec_len(t_vector v)
 int	vec_equal(t_vector v1, t_vector v2)
 {
 	if (v1.x == v2.x && v1.y == v2.y)
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
 double	vec_angle(t_vector v)

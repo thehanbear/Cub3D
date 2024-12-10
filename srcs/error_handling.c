@@ -69,6 +69,10 @@ void	map_free_error(int errno, t_map_data	*game)
 		printf("FD NO OPEN!\n");
 	if (errno == EXIT_NO_MAP)
 		printf("WHERE MAP!\n");
+	if (errno == EXIT_TEXTURE_LOAD_FAIL)
+		printf("Texture loading failed\n");
+	if (errno == EXIT_PLAYER_SEARCH_FAIL)
+		printf("Failed to find player on map\n");
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -87,6 +91,10 @@ int	handle_error(int errno, t_map_data *game)
 	if (errno == EXIT_FD_OPEN_ERROR)
 		map_free_error(errno, game);
 	if (errno == EXIT_NO_MAP)
+		map_free_error(errno, game);
+	if (errno == EXIT_TEXTURE_LOAD_FAIL)
+		map_free_error(errno, game);
+	if (errno == EXIT_PLAYER_SEARCH_FAIL)
 		map_free_error(errno, game);
 	if (errno == 0)
 		return (0);

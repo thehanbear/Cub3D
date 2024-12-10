@@ -12,7 +12,18 @@
 
 #include "../header.h"
 
-// 텍스처에서 색상을 가져오는 함수
+static int	reverse_bytes(int c)
+{
+	unsigned int	b;
+
+	b = 0;
+	b |= (c & 0xFF) << 24;
+	b |= (c & 0xFF00) << 8;
+	b |= (c & 0xFF0000) >> 8;
+	b |= (c & 0xFF000000) >> 24;
+	return (b);
+}
+
 uint32_t get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y)
 {
     uint32_t *pixel;
@@ -20,10 +31,9 @@ uint32_t get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y)
     if (!tex || x >= tex->width || y >= tex->height)
         return (0);
     pixel = (uint32_t *)tex->pixels;
-    return (pixel[y * tex->width + x]);
+    return (reverse_bytes(pixel[y * tex->width + x]));
 }
 
-// 이미지에 픽셀 색상을 설정하는 함수
 void set_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 {
     uint32_t *pixel;
@@ -34,7 +44,6 @@ void set_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
     pixel[y * img->width + x] = color;
 }
 
-// RGBA 값으로 색상을 합성하는 함수
 uint32_t rgba(int r, int g, int b, int a)
 {
     return (a << 24 | b << 16 | g << 8 | r);
@@ -44,7 +53,7 @@ uint32_t hex_to_int(const char *hex)
 {
     uint32_t color = 0;
     if (hex[0] == '#')
-        hex++;  // '#' 기호를 건너뜁니다.
+        hex++;
     
     for (int i = 0; hex[i] != '\0'; i++)
     {

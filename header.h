@@ -30,10 +30,6 @@
 # define FOV_DEGREES 60
 # define COLOR_FLOOR 0xB994702F
 # define COLOR_CEILING 0x89CFF32F
-# define COLOR_WALL_N 0xF5F5F2FF
-# define COLOR_WALL_S 0xF5F5F2FF
-# define COLOR_WALL_E 0xB5B5B2FF
-# define COLOR_WALL_W 0xB5B5B2FF
 
 typedef enum s_error_code
 {
@@ -44,6 +40,8 @@ typedef enum s_error_code
 	EXIT_MAP_INIT_CALLOC_FAIL = 204,
 	EXIT_FD_OPEN_ERROR = 205,
 	EXIT_NO_MAP = 206, 
+	EXIT_TEXTURE_LOAD_FAIL = 207,
+	EXIT_PLAYER_SEARCH_FAIL = 208
 }	t_error;
 
 typedef struct s_vector
@@ -62,17 +60,20 @@ typedef struct s_player
 
 typedef struct s_texture
 {
-	mlx_texture_t	*no;
-	mlx_texture_t	*we;
-	mlx_texture_t	*ea;
-	mlx_texture_t	*so;
+	mlx_texture_t	*n;
+	mlx_texture_t	*s;
+	mlx_texture_t	*e;
+	mlx_texture_t	*w;
 }	t_texture;
 
 typedef struct s_ray
 {
-	int		h_hit;
-	float	angle_rad;
-	double	distance;
+	int			h_hit;
+	float		angle_rad;
+	double		distance;
+	double		wall_h;
+	double 		hit_part;
+	uint32_t	x;
 }	t_ray;
 
 typedef struct s_map_data
@@ -89,9 +90,9 @@ typedef struct s_map_data
 	char	*w_wall_asset;
 	char	**map;
 	mlx_t		*mlx;
+	mlx_image_t	*image;
 	t_player	player;
 	t_texture	textures;
-	mlx_image_t	*image;
 }   t_map_data;
 
 /* ************************************************************************** */
@@ -124,27 +125,17 @@ double		vec_angle(t_vector v);
 t_vector	vec_rotate(t_vector v, int angle);
 void		vec_print(t_vector v);
 void		start_game(t_map_data *game);
-void		init_game(t_map_data *game);
-void 		init_player(t_map_data *game);
+int			init_game(t_map_data *game);
 void 		raycasting(t_map_data *game);
-void 		draw_column(t_map_data *game, t_ray *ray, int col);
-float angle_norm(float angle);
-int load_textures(t_map_data *game);
-void calculate_ray_distance(t_map_data *game);
-void calculate_ray_data(t_map_data *game, double ray_offset);
-void set_vertical_texture(t_map_data *game);
-void set_horizontal_texture(t_map_data *game);
-void zoom_in(t_map_data *game);
-void zoom_out(t_map_data *game);
-uint32_t get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y);
-void set_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
-uint32_t rgba(int r, int g, int b, int a);
-uint32_t hex_to_int(const char *hex);
-void mlx_key(mlx_key_data_t keydata, void *param);
-void game_exit(t_map_data *game);
-void start_game(t_map_data *game);
-void game_loop(void *param);
-void init_player(t_map_data *game);
-void check_textures(t_map_data *game);
+void 		draw_column(t_map_data *game, t_ray *ray);
+float		angle_norm(float angle);
+uint32_t	get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y);
+void		set_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
+uint32_t	rgba(int r, int g, int b, int a);
+uint32_t	hex_to_int(const char *hex);
+void		mlx_key(mlx_key_data_t keydata, void *param);
+void		game_exit(t_map_data *game);
+void		start_game(t_map_data *game);
+void		game_loop(void *param);
 
 #endif

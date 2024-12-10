@@ -12,18 +12,27 @@
 
 #include "../header.h"
 
+float	angle_norm(float angle)
+{
+	if (angle < 0)
+		angle += (2 * M_PI);
+	if (angle > (2 * M_PI))
+		angle -= (2 * M_PI);
+	return (angle);
+}
+
 int	angle_x(float angle)
 {
 	if (angle > 0 && angle < M_PI)
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
 int	angle_y(float angle)
 {
 	if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
 int	check_wall(float x, float y, t_map_data *game)
@@ -104,18 +113,34 @@ float	v_intersect(t_map_data *game, float angle)
 	return (vec_len(vec_sub(v, player)));
 }
 
+static void	get_hit_part(t_map_data *game, t_ray *ray)
+{
+	t_vector	v;
+
+	v = vec_from_angle(ray->angle_rad);
+	v = vec_mul(v, ray->distance);
+	if (ray->h_hit)
+		ray->hit_part = (game->player.x + v.x) / (double)TILE_SIZE;
+	else
+		ray->hit_part = (game->player.y + v.y) / (double)TILE_SIZE;
+	ray->hit_part = ray->hit_part - floor(ray->hit_part);
+}
+
 void	raycasting(t_map_data *game)
 {
-	t_ray		ray;
-	double		h_inter;
-	double		v_inter;
-	int			col;
+	t_ray	ray;
+	double	h_inter;
+	double	v_inter;
+	double	angle_increment;
+	uint32_t		x;
 
-	col = 0;
+	x = 0;
 	ray.angle_rad = game->player.heading - (game->player.fov_radians / 2);
-	while (col < SCREEN_WIDTH)
+	angle_increment = game->player.fov_radians / SCREEN_WIDTH;
+	while (x < SCREEN_WIDTH)
 	{
-		ray.h_hit = false;
+		ray.x = x;
+		ray.h_hit = 0;
 		h_inter = h_intersect(game, angle_norm(ray.angle_rad));
 		v_inter = v_intersect(game, angle_norm(ray.angle_rad));
 		if (v_inter <= h_inter)
@@ -123,10 +148,11 @@ void	raycasting(t_map_data *game)
 		else
 		{
 			ray.distance = h_inter;
-			ray.h_hit = true;
+			ray.h_hit = 1;
 		}
-		draw_column(game, &ray, col);
-		col++;
-		ray.angle_rad += (game->player.fov_radians / SCREEN_WIDTH);
+		get_hit_part(game, &ray);
+		draw_column(game, &ray);
+		x++;
+		ray.angle_rad += angle_increment;
 	}
 }
