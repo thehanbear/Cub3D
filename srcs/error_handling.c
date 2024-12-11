@@ -73,6 +73,8 @@ void	map_free_error(int errno, t_map_data	*game)
 		printf("Texture loading failed\n");
 	if (errno == EXIT_PLAYER_SEARCH_FAIL)
 		printf("Failed to find player on map\n");
+	if (errno == EXIT_PARSE_COLOR_FAIL)
+		printf("Failed to parse floor or ceiling color\n");
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -95,6 +97,8 @@ int	handle_error(int errno, t_map_data *game)
 	if (errno == EXIT_TEXTURE_LOAD_FAIL)
 		map_free_error(errno, game);
 	if (errno == EXIT_PLAYER_SEARCH_FAIL)
+		map_free_error(errno, game);
+	if (errno == EXIT_PARSE_COLOR_FAIL)
 		map_free_error(errno, game);
 	if (errno == 0)
 		return (0);

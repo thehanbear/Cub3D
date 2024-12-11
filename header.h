@@ -41,7 +41,8 @@ typedef enum s_error_code
 	EXIT_FD_OPEN_ERROR = 205,
 	EXIT_NO_MAP = 206, 
 	EXIT_TEXTURE_LOAD_FAIL = 207,
-	EXIT_PLAYER_SEARCH_FAIL = 208
+	EXIT_PLAYER_SEARCH_FAIL = 208,
+	EXIT_PARSE_COLOR_FAIL = 209
 }	t_error;
 
 typedef struct s_vector
@@ -64,6 +65,8 @@ typedef struct s_texture
 	mlx_texture_t	*s;
 	mlx_texture_t	*e;
 	mlx_texture_t	*w;
+	uint32_t		floor;
+	uint32_t		ceiling;
 }	t_texture;
 
 typedef struct s_ray

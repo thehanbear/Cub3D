@@ -82,6 +82,38 @@ static int	load_textures(t_map_data *game)
 	return (1);
 }
 
+int	parse_color(char *color_in, uint32_t *color_out)
+{
+	char **colors_str;
+	int *colors_int;
+	int i;
+
+	colors_str = ft_split(color_in, ',');
+	if (!colors_str)
+		return (0);
+	colors_int = malloc(3 * sizeof(int));
+	if (!colors_int)
+	{
+		free(colors_str);
+		return (0);
+	}
+	i = 0;
+	while (colors_str[i] && i < 3)
+	{
+		colors_int[i] = ft_atoi(colors_str[i]);
+		i++;
+	}
+	free(colors_str);
+	if (i < 3)
+	{
+		free(colors_int);
+		return (0);
+	}
+	*color_out = rgba(colors_int[0], colors_int[1], colors_int[2], 255);
+	free(colors_int);
+	return (1);
+}
+
 int init_game(t_map_data *game)
 {
 	int	p_x;
@@ -98,5 +130,8 @@ int init_game(t_map_data *game)
     game->image = NULL;
     if (load_textures(game) == 0)
 		return (EXIT_TEXTURE_LOAD_FAIL);
+	if (parse_color(game->floor_color, &(game->textures.floor)) == 0 ||
+		parse_color(game->ceiling_color, &(game->textures.ceiling)) == 0)
+		return (EXIT_PARSE_COLOR_FAIL);
 	return(1);
 }

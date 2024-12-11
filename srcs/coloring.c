@@ -46,7 +46,7 @@ void set_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 
 uint32_t rgba(int r, int g, int b, int a)
 {
-    return (a << 24 | b << 16 | g << 8 | r);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 uint32_t hex_to_int(const char *hex)
