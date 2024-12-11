@@ -27,7 +27,7 @@ static void	draw_full_wall(t_map_data *game, t_ray *ray, mlx_texture_t *hit_text
 	while (y < SCREEN_HEIGHT)
 	{
 		color = get_tex_color(hit_texture, tex_x, tex_y_start + tex_y_ratio * y);
-		mlx_put_pixel(game->image, (uint32_t)ray->x, y++, color);
+		set_image_color(game->image, (uint32_t)ray->x, y++, color);
 	}
 }
 
@@ -44,14 +44,14 @@ static void	draw_wall_with_background(t_map_data *game, t_ray *ray, mlx_texture_
 	tex_x = hit_texture->width * ray->hit_part;
 	y = 0;
 	while (y < wall_y_start)
-		mlx_put_pixel(game->image, ray->x, y++, game->textures.ceiling);
+		set_image_color(game->image, ray->x, y++, game->textures.ceiling);
 	while (y < wall_y_start + ray->wall_h)
 	{
 		color = get_tex_color(hit_texture, tex_x, tex_y_ratio * (y - wall_y_start));
-		mlx_put_pixel(game->image, ray->x, y++, color);
+		set_image_color(game->image, ray->x, y++, color);
 	}
 	while (y < SCREEN_HEIGHT)
-		mlx_put_pixel(game->image, ray->x, y++, game->textures.floor);
+		set_image_color(game->image, ray->x, y++, game->textures.floor);
 }
 
 static mlx_texture_t	*get_hit_texture(t_texture *textures, t_ray *ray)
