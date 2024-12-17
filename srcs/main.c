@@ -23,9 +23,13 @@ int main(int argc, char **argv)
 		return (handle_error(EXIT_ARG_COUNT_ERROR, game));
 	if (!handle_error(parse_args(argv, game), game))
 		return (1);
-	printf("\nhere\n");	
+	printf("\nhere\n");
+	if (!handle_error(init_game(game), game))
+		return (1);
+	start_game(game);
 	// if (game)
-	// 	free_game_struct(game);		
-	
+	// 	free_game_struct(game);
+	return (0);
+
 }
 
