@@ -1,8 +1,8 @@
-NO                      textures/wolfenstein/grey_stone.xpm
+NO                      textures/wolfenstein/grey_stone.png
 
-SO textures/wolfenstein/blue_stone.xpm
+SO textures/wolfenstein/blue_stone.png
 
-WE textures/wolfenstein/red_brick.xpm
+WE textures/wolfenstein/red_brick.png
 
 EA textures/wolfenstein/wood.xpm
 
@@ -13,9 +13,9 @@ C 153,204,255
       1111111
 111111111111                  111111111
 100000000011111111111111111111100000001
-100000000000000000000000000000000000001
+10000000000000000000000000000000000S001
 111111111101111111111111111111100000001
-10S000000001                  111111111
+100000000001                  111111111
 111111111101
 110000000001        111111
 111111111111

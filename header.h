@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/13 16:04:57 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:33:39 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ typedef enum s_error_code
 	EXIT_NO_MAP = 206, 
 	EXIT_TEXTURE_LOAD_FAIL = 207,
 	EXIT_PLAYER_SEARCH_FAIL = 208,
-	EXIT_PARSE_COLOR_FAIL = 209
+	EXIT_PARSE_COLOR_FAIL = 209,
+	EXIT_MAP_FLOOD_ERROR = 210,
+	EXIT_NO_PLAYER = 211,
 }	t_error;
 
 typedef struct s_vector
@@ -94,9 +96,11 @@ typedef struct s_map_data
 	char	*e_wall_asset;
 	char	*w_wall_asset;
 	char	**map;
+	char	**copy;
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_player	player;
+	t_player	temp_player;
 	t_texture	textures;
 	t_camera	camera;
 }   t_map_data;
@@ -104,14 +108,22 @@ typedef struct s_map_data
 /* ************************************************************************** */
 /*									error_handling							  */
 /* ************************************************************************** */
-int		handle_error(int errno, t_map_data *game);
-void	clean_info_struct(t_map_data	*game);
-void	free_game_struct(t_map_data	*game);
+int			handle_error(int errno, t_map_data *game);
+void		clean_info_struct(t_map_data *game);
+void		free_game_struct(t_map_data	*game);
 
 /* ************************************************************************** */
 /*									map_init								  */
 /* ************************************************************************** */
-int	parse_args(char **argv, t_map_data	*game);
+int			parse_args(char **argv, t_map_data	*game);
+void		print_map(char **map);
+
+
+/* ************************************************************************** */
+/*									floodfill								  */
+/* ************************************************************************** */
+int 		full_flood_fill(t_map_data *game, t_player fill_pos);
+
 
 /* ************************************************************************** */
 /*									raycasting								  */

@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/14 17:37:52 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:34:37 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ void	map_free_error(int errno, t_map_data	*game)
 		printf("Failed to find player on map\n");
 	if (errno == EXIT_PARSE_COLOR_FAIL)
 		printf("Failed to parse floor or ceiling color\n");
+	if (errno == EXIT_MAP_FLOOD_ERROR)
+		printf("Flood Fill failed: open area on map\n");
+	if (errno == EXIT_NO_PLAYER)
+		printf("Invalid amount of Player(s) found on map\n");
+	// if (errno == EXIT_MULT_PLAYERS)
+	// 	printf("Multiples Players found on map\n");
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -100,6 +106,12 @@ int	handle_error(int errno, t_map_data *game)
 		map_free_error(errno, game);
 	if (errno == EXIT_PARSE_COLOR_FAIL)
 		map_free_error(errno, game);
+	if (errno == EXIT_MAP_FLOOD_ERROR)
+		map_free_error(errno, game);
+	if (errno == EXIT_NO_PLAYER)
+		map_free_error(errno, game);
+	// if (errno == EXIT_MULT_PLAYERS)
+	// 	map_free_error(errno, game);
 	if (errno == 0)
 		return (0);
 	else

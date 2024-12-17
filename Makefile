@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/12/13 15:56:07 by jbremser         ###   ########.fr        #
+#    Updated: 2024/12/17 12:16:19 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib" -lm
 
 FILES		=	main.c \
 				error_handling.c \
+				floodfill.c \
 				map_init.c \
 				mlx_execution.c \
 				utils.c \

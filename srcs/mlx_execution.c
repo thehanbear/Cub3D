@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/11/15 04:37:19 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:08:29 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void mlx_key(mlx_key_data_t keydata, void *param)
     {
         game_exit(game);
     }
+    //add movement here!
 }
 

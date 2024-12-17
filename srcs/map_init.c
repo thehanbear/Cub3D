@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/14 17:50:13 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:21:02 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	print_map(char **map)
 
 	x = 0;
 	y = 0;
+	printf("Inside print_map:\n");
 	write(1, "\n", 1);
 	while (map[y])
 	{
@@ -159,30 +160,6 @@ void find_ones(t_map_data *game)
     }
 } 
 
-// void	find_ones(t_map_data	*game)
-// {
-// 	int y = 0;
-// 	int a = 0;
-// 	int x = 0;
-	
-// 	while (game->info[y])
-// 	{
-// 		while (game->info[y][x])
-// 		{
-// 			if (!ft_strncmp(&game->info[y][x], " ", 1))
-// 				x++;
-
-// 		}
-// 		if (!ft_strncmp(&game->info[y][x], "1", 1))
-// 			break ;
-// 		y++;
-// 	}
-// 	game->map_rows = game->rows - y;
-// 	game->map = ft_calloc((game->map_rows), sizeof(char *));
-// 	while (a < game->map_rows)
-// 		game->map[a++] = ft_strdup(game->info[y++]);
-// }
-
 void	print_info(t_map_data *game)
 {
 	printf("game->info map:\n");
@@ -233,7 +210,44 @@ static int	map_parse(char **argv, t_map_data	*game)
     return (0);
 }
 
+int	find_player(t_map_data	*game)
+{
+	int	x;
+	int	y;
+	int P_found;
 
+	P_found = 0;
+	x = 0;
+	y = 0;
+	while (game->map[y])
+	{
+		while (game->map[y][x])
+		{
+			if (ft_strchr("NSWE", game->map[y][x]))
+			{
+				if (game->map[y][x] == 'N')
+					game->player.heading = 0;
+				if (game->map[y][x] == 'E')
+					game->player.heading = 90;
+				if (game->map[y][x] == 'S')
+					game->player.heading = 180;
+				if (game->map[y][x] == 'W')
+					game->player.heading = 270;
+				// || game->copy[y][x] == 'C' || game->copy[y][x] == 'P')
+				// printf("");
+				game->player.y = y;
+				game->player.x = x;
+				printf("\nfind_player:\nplayer pos: %d,%d\nplayer heading: %d\n", (int)game->player.y, (int)game->player.x, (int)game->player.heading);
+				P_found++;
+			}
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	return (P_found);
+
+}
 
 int	parse_args(char **argv, t_map_data	*game)
 {
@@ -245,6 +259,12 @@ int	parse_args(char **argv, t_map_data	*game)
 		return (EXIT_ARG_NAME_ERROR);
 	if (map_parse(argv, game))
 		return (EXIT_MAP_INIT_ERROR);
+	if (find_player(game) != 1)
+		return (EXIT_NO_PLAYER);
+	// if (find_player(game) > 1)
+	// 	return (EXIT_MULT_PLAYERS);
+	if (full_flood_fill(game, game->player))
+		return (EXIT_MAP_FLOOD_ERROR);
 	else
 	{
 		// printf("\nNICE FILE!\n");
