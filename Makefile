@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/11/05 15:08:03 by jbremser         ###   ########.fr        #
+#    Updated: 2024/12/13 15:56:07 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FLAGS		=	-Wall -Wextra -Werror -g
 
 MLX42		=	MLX42/build/libmlx42.a
 
-MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib"
+MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib" -lm
 
 FILES		=	main.c \
 				error_handling.c \
