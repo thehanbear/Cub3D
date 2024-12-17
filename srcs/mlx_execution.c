@@ -22,6 +22,7 @@ void game_loop(void *param)
 	if (!game->image) 
 	{
         printf("Failed to create new image\n");
+		// TODO add freeing of memory before exit
         exit(1);
     }
     raycasting(game);
@@ -33,8 +34,8 @@ void start_game(t_map_data *game)
     game->mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "Cub3D", 0);
 	if (!game->mlx) 
 	{
-       printf("Failed to initialize mlx\n");
-        exit(1);
+		printf("Failed to initialize mlx\n");
+		exit(1);
     }
     mlx_loop_hook(game->mlx, &game_loop, game);
     mlx_key_hook(game->mlx, &mlx_key, game);

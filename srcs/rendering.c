@@ -78,7 +78,7 @@ void	draw_column(t_map_data *game, t_ray *ray)
 	mlx_texture_t	*hit_texture;
 
 	ray->distance *= cos(angle_norm(ray->angle_rad - game->player.heading));
-	ray->wall_h = (TILE_SIZE / ray->distance) * ((SCREEN_WIDTH / 2) / tan(game->player.fov_radians / 2));
+	ray->wall_h = (TILE_SIZE / ray->distance) * game->camera.focal_length;
 	hit_texture = get_hit_texture(&game->textures, ray);
 	if (ray->wall_h > SCREEN_HEIGHT)
 		draw_full_wall(game, ray, hit_texture);

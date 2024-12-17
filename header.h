@@ -25,11 +25,7 @@
 # define SCREEN_WIDTH 800
 # define SCREEN_HEIGHT 600
 # define TILE_SIZE 30
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
 # define FOV_DEGREES 60
-# define COLOR_FLOOR 0xB994702F
-# define COLOR_CEILING 0x89CFF32F
 
 typedef enum s_error_code
 {
@@ -56,7 +52,6 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	heading;
-	float	fov_radians;
 }	t_player;
 
 typedef struct s_texture
@@ -68,6 +63,13 @@ typedef struct s_texture
 	uint32_t		floor;
 	uint32_t		ceiling;
 }	t_texture;
+
+typedef struct s_camera
+{
+	double	fov_radians;
+	double	focal_length;
+	double	angle_increment;
+}	t_camera;
 
 typedef struct s_ray
 {
@@ -96,6 +98,7 @@ typedef struct s_map_data
 	mlx_image_t	*image;
 	t_player	player;
 	t_texture	textures;
+	t_camera	camera;
 }   t_map_data;
 
 /* ************************************************************************** */

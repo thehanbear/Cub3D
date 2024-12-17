@@ -44,13 +44,12 @@ int	check_wall(float x, float y, t_map_data *game)
 		return (0);
 	x_m = floor (x / TILE_SIZE);
 	y_m = floor (y / TILE_SIZE);
-	// if ((y_m >= game->map_rows || x_m >= game->map_cols))
-	//  	return (0);
-	if (game->map[y_m] && x_m <= (int)strlen(game->map[y_m]))
-		if (game->map[y_m][x_m] == '1')
-			return (0);
+	if (!game->map[y_m] || x_m >= (int)strlen(game->map[y_m])
+		|| game->map[y_m][x_m] == '1')
+		return (0);
 	return (1);
 }
+
 int	check_intersect_h(float angle, double *h_y, double *step_y)
 {
 	if (angle > 0 && angle < M_PI)
@@ -128,15 +127,13 @@ static void	get_hit_part(t_map_data *game, t_ray *ray)
 
 void	raycasting(t_map_data *game)
 {
-	t_ray	ray;
-	double	h_inter;
-	double	v_inter;
-	double	angle_increment;
-	uint32_t		x;
+	t_ray		ray;
+	double		h_inter;
+	double		v_inter;
+	uint32_t	x;
 
 	x = 0;
-	ray.angle_rad = game->player.heading - (game->player.fov_radians / 2);
-	angle_increment = game->player.fov_radians / SCREEN_WIDTH;
+	ray.angle_rad = game->player.heading - (game->camera.fov_radians / 2);
 	while (x < SCREEN_WIDTH)
 	{
 		ray.x = x;
@@ -153,6 +150,6 @@ void	raycasting(t_map_data *game)
 		get_hit_part(game, &ray);
 		draw_column(game, &ray);
 		x++;
-		ray.angle_rad += angle_increment;
+		ray.angle_rad += game->camera.angle_increment;
 	}
 }
