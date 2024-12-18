@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:13:10 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/17 16:21:59 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/18 13:52:40 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int full_flood_fill(t_map_data *game, t_player fill_pos)
 	
 	fill(game, (int)fill_pos.y, (int)fill_pos.x);
 	printf("after fill\n");
+	print_map(game->copy);
 	// if (check_copy(game) == &game->player)
 	// 	printf("full_floodfill\n");
 	return (0);
