@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:51:35 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/18 15:56:23 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:58:30 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int main(int argc, char **argv)
 	if (!handle_error(parse_args(argv, game), game))
 		return (1);
 	printf("\nPARSING COMPLETE!\n");
-	// if (!handle_error(init_game(game), game))
-	// 	return (1);
-	// start_game(game);
+	if (!handle_error(init_game(game), game))
+		return (1);
+	start_game(game);
 	if (game)
 		free_game_struct(game);
 	return (0);
