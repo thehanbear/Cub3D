@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/12/17 12:16:19 by jbremser         ###   ########.fr        #
+#    Updated: 2024/12/18 15:49:14 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib" -lm
 
 FILES		=	main.c \
 				error_handling.c \
-				floodfill.c \
-				map_init.c \
+				parse_args.c \
+				minesweep.c \
+				find_functions.c \
 				mlx_execution.c \
 				utils.c \
 				vector_init.c \
@@ -30,7 +31,7 @@ FILES		=	main.c \
 				vector_rotate.c \
 				raycasting.c \
 				rendering.c \
-				coloring.c
+				coloring.c \
 
 SRCDIR		=	srcs
 OBJDIR		=	objs

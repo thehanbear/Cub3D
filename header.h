@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/17 15:33:39 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:54:58 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef enum s_error_code
 	EXIT_TEXTURE_LOAD_FAIL = 207,
 	EXIT_PLAYER_SEARCH_FAIL = 208,
 	EXIT_PARSE_COLOR_FAIL = 209,
-	EXIT_MAP_FLOOD_ERROR = 210,
+	EXIT_MINESWEEP_ERROR = 210,
 	EXIT_NO_PLAYER = 211,
 }	t_error;
 
@@ -111,18 +111,32 @@ typedef struct s_map_data
 int			handle_error(int errno, t_map_data *game);
 void		clean_info_struct(t_map_data *game);
 void		free_game_struct(t_map_data	*game);
+void		free_array(char **str);
+
 
 /* ************************************************************************** */
-/*									map_init								  */
+/*									parse_args								  */
 /* ************************************************************************** */
 int			parse_args(char **argv, t_map_data	*game);
 void		print_map(char **map);
 
+/* ************************************************************************** */
+/*									find_functions							  */
+/* ************************************************************************** */
+int			find_player(t_map_data	*game);
+void		find_map(t_map_data	*game);
 
 /* ************************************************************************** */
-/*									floodfill								  */
+/*									utils									  */
 /* ************************************************************************** */
-int 		full_flood_fill(t_map_data *game, t_player fill_pos);
+int			init_game(t_map_data *game);
+void		print_info(t_map_data *game);
+void		print_map(char **map);
+
+/* ************************************************************************** */
+/*									minesweep								  */
+/* ************************************************************************** */
+int minesweep(t_map_data *game);
 
 
 /* ************************************************************************** */
@@ -143,7 +157,6 @@ double		vec_angle(t_vector v);
 t_vector	vec_rotate(t_vector v, int angle);
 void		vec_print(t_vector v);
 void		start_game(t_map_data *game);
-int			init_game(t_map_data *game);
 void 		raycasting(t_map_data *game);
 void 		draw_column(t_map_data *game, t_ray *ray);
 float		angle_norm(float angle);
