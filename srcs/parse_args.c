@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/18 15:53:55 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:23:59 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static void map_to_str(t_map_data *game, char *argv)
 	close (fd);
 }
 
+/* uses GNL to find the amount of rows*/
 static int	map_rows(char *arg)
 {
 	char	*line;
