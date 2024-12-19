@@ -6,11 +6,18 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2024/11/14 17:37:52 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:49:38 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
+
+void	free_array(char **str);
+int		handle_error(int errno, t_map_data *game);
+void 	free_string(char *str);
+void	free_game_struct(t_map_data	*game);
+void	map_free_error(int errno, t_map_data *game);
+
 
 void	free_array(char **str)
 {
@@ -25,13 +32,6 @@ void	free_array(char **str)
 	free(str);
 }
 
-void clean_info_struct(t_map_data	*game)
-{
-	// if (game->copy)
-	// 	free_array(game->copy);
-	if (game->info)
-		free_array(game->info);
-}
 
 void free_string(char *str)
 {
@@ -75,6 +75,12 @@ void	map_free_error(int errno, t_map_data	*game)
 		printf("Failed to find player on map\n");
 	if (errno == EXIT_PARSE_COLOR_FAIL)
 		printf("Failed to parse floor or ceiling color\n");
+	if (errno == EXIT_MINESWEEP_ERROR)
+		printf("Minesweep failed: open area on map\n");
+	if (errno == EXIT_NO_PLAYER)
+		printf("Invalid amount of Player(s) found on map\n");
+	// if (errno == EXIT_MULT_PLAYERS)
+	// 	printf("Multiples Players found on map\n");
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -100,8 +106,22 @@ int	handle_error(int errno, t_map_data *game)
 		map_free_error(errno, game);
 	if (errno == EXIT_PARSE_COLOR_FAIL)
 		map_free_error(errno, game);
+	if (errno == EXIT_MINESWEEP_ERROR)
+		map_free_error(errno, game);
+	if (errno == EXIT_NO_PLAYER)
+		map_free_error(errno, game);
+	// if (errno == EXIT_MULT_PLAYERS)
+	// 	map_free_error(errno, game);
 	if (errno == 0)
 		return (0);
 	else
 		return (1);	
 }
+
+// void clean_info_struct(t_map_data	*game)
+// {
+// 	// if (game->copy)
+// 	// 	free_array(game->copy);
+// 	if (game->info)
+// 		free_array(game->info);
+// }

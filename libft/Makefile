@@ -56,7 +56,11 @@ CFILES = ft_memset.c \
 		 cast_hex.c \
 		 cast_dec.c \
 		 printp.c \
+<<<<<<< HEAD
 		 get_next_line.c 	
+=======
+		 get_next_line.c \
+>>>>>>> 5dbf18f (added libft)
 		 
 ANSI_BLUE := \033[0;34m
 ANSI_RED :=	\033[31m

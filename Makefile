@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/11/05 15:08:03 by jbremser         ###   ########.fr        #
+#    Updated: 2024/12/18 15:49:14 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,20 @@ FLAGS		=	-Wall -Wextra -Werror -g
 
 MLX42		=	MLX42/build/libmlx42.a
 
-MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib"
+MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib" -lm
 
 FILES		=	main.c \
 				error_handling.c \
-				map_init.c \
+				parse_args.c \
+				minesweep.c \
+				find_functions.c \
 				mlx_execution.c \
 				utils.c \
 				vector_init.c \
 				vector_utils.c \
 				raycasting.c \
 				rendering.c \
-				coloring.c
+				coloring.c \
 
 SRCDIR		=	srcs
 OBJDIR		=	objs

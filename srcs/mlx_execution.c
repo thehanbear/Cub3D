@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_execution.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/11/15 04:37:19 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:19:49 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,19 @@ void start_game(t_map_data *game)
 		printf("Failed to initialize mlx\n");
 		exit(1);
     }
+	printf("\nafter mlx_init\n");
     mlx_loop_hook(game->mlx, &game_loop, game);
+	printf("\nafter mlx_loop_hook\n");
     mlx_key_hook(game->mlx, &mlx_key, game);
+	printf("\nafter mlx_key_hook\n");
+    if (game->mlx == NULL)
+       	printf("\nmlx is NULL\n");
+    else
+       	printf("\n mlx isnt NULL?!?!?!\n");
     mlx_loop(game->mlx);
+    printf("\nafter loop\n");
 }
+
 
 void game_exit(t_map_data *game)
 {
@@ -55,14 +64,24 @@ void game_exit(t_map_data *game)
     exit(0);
 }
 
+// void move_player(t_map_data *game, char *direction)
+// {
+//     if (strcmp(direction, "UP"))
+        
+// }
+
 void mlx_key(mlx_key_data_t keydata, void *param)
 {
     t_map_data *game;
 
     game = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
-    {
         game_exit(game);
-    }
+    // if ((keydata.key == MLX_KEY_UP || MLX_KEY_W) && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
+    // {  
+    //     move_player(game, "UP");
+
+    // }
+    //add movement here!
 }
 
