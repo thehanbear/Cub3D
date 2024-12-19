@@ -20,8 +20,8 @@ static void	draw_full_wall(t_map_data *game, t_ray *ray, mlx_texture_t *hit_text
 	uint32_t	color;
 	uint32_t	y;
 
-	tex_y_start = (ray->wall_h - game->image->height) * hit_texture->height / ray->wall_h / 2;
 	tex_y_ratio = hit_texture->height / ray->wall_h;
+	tex_y_start = (ray->wall_h - game->image->height) * tex_y_ratio / 2;
 	tex_x = hit_texture->width * ray->hit_part;
 	y = 0;
 	while (y < SCREEN_HEIGHT)
@@ -57,7 +57,7 @@ static void	draw_wall_with_background(t_map_data *game, t_ray *ray, mlx_texture_
 static mlx_texture_t	*get_hit_texture(t_texture *textures, t_ray *ray)
 {
 	ray->angle_rad = angle_norm(ray->angle_rad);
-	if (ray->h_hit == false)
+	if (ray->h_hit == 0)
 	{
 		if (ray->angle_rad > M_PI / 2 && ray->angle_rad < 3 * (M_PI / 2))
 			return (textures->w);
@@ -80,7 +80,7 @@ void	draw_column(t_map_data *game, t_ray *ray)
 	ray->distance *= cos(angle_norm(ray->angle_rad - game->player.heading));
 	ray->wall_h = (TILE_SIZE / ray->distance) * game->camera.focal_length;
 	hit_texture = get_hit_texture(&game->textures, ray);
-	if (ray->wall_h > SCREEN_HEIGHT)
+	if (ray->wall_h >= SCREEN_HEIGHT)
 		draw_full_wall(game, ray, hit_texture);
 	else
 		draw_wall_with_background(game, ray, hit_texture);

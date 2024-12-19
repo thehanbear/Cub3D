@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_rotate.c                                    :+:      :+:    :+:   */
+/*   vector_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 03:41:08 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/11/15 02:04:48 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/11/14 03:40:58 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/11/14 03:41:01 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-t_vector	vec_rotate(t_vector v, int angle)
+t_vector	vec_add(t_vector v1, t_vector v2)
 {
-	t_vector	v_rotated;
+	return (vec_new(v1.x + v2.x, v1.y + v2.y));
+}
 
-	v_rotated = vec_mul(vec_new(cos(vec_angle(v) + (M_PI / 180 * angle)),
-				-sin(vec_angle(v) + (M_PI / 180 * angle))), vec_len(v));
-	return (v_rotated);
+t_vector	vec_sub(t_vector v1, t_vector v2)
+{
+	return (vec_new(v1.x - v2.x, v1.y - v2.y));
+}
+
+t_vector	vec_mul(t_vector v, double n)
+{
+	return (vec_new(v.x * n, v.y * n));
+}
+
+double	vec_len(t_vector v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y));
 }

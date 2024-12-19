@@ -21,16 +21,7 @@ t_vector	vec_new(double x, double y)
 	return (v);
 }
 
-t_vector	vec_zero(void)
+t_vector	vec_from_angle(float angle)
 {
-	t_vector	v;
-
-	v.x = 0;
-	v.y = 0;
-	return (v);
-}
-
-t_vector vec_from_angle(float angle)
-{
-    return vec_new(cos(angle), sin(angle));
+    return (vec_new(cos(angle), -sin(angle)));
 }

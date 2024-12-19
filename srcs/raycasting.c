@@ -21,16 +21,16 @@ float	angle_norm(float angle)
 	return (angle);
 }
 
-int	angle_x(float angle)
+static int	y_rising(float angle)
 {
 	if (angle > 0 && angle < M_PI)
 		return (1);
 	return (0);
 }
 
-int	angle_y(float angle)
+static int	x_rising(float angle)
 {
-	if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
+	if (angle < (M_PI / 2) || angle > (3 * M_PI) / 2)
 		return (1);
 	return (0);
 }
@@ -50,29 +50,7 @@ int	check_wall(float x, float y, t_map_data *game)
 	return (1);
 }
 
-int	check_intersect_h(float angle, double *h_y, double *step_y)
-{
-	if (angle > 0 && angle < M_PI)
-	{
-		*h_y += TILE_SIZE;
-		return (-1);
-	}
-	*step_y *= -1;
-	return (1);
-}
-
-int	check_intersect_v(float angle, double *v_x, double *step_x)
-{
-	if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) 
-	{
-		*v_x += TILE_SIZE;
-		return (-1);
-	}
-	*step_x *= -1;
-	return (1);
-}
-
-float	h_intersect(t_map_data *game, float angle)
+static float	h_hit(t_map_data *game, float angle)
 {
 	t_vector	h;
 	t_vector	step;
@@ -81,18 +59,27 @@ float	h_intersect(t_map_data *game, float angle)
 
 	step.y = TILE_SIZE;
 	step.x = TILE_SIZE / tan(angle);
-	h.y = floor(game->player.y / TILE_SIZE) * TILE_SIZE;
-	check = check_intersect_h(angle, &h.y, &step.y);
-	h.x = game->player.x + (h.y - game->player.y) / tan(angle);
-	if ((angle_y(angle) && step.x > 0) || (!angle_y(angle) && step.x < 0))
+	if ((x_rising(angle) && step.x < 0) || (!x_rising(angle) && step.x > 0))
 		step.x *= -1;
-	while (check_wall(h.x, h.y - check, game))
+	h.y = floor(game->player.y / TILE_SIZE) * TILE_SIZE;
+	if (y_rising(angle))
+	{
+		h.y += TILE_SIZE;
+		check = 1;
+	}
+	else
+	{
+		step.y *= -1;
+		check = -1;
+	}
+	h.x = game->player.x + (h.y - game->player.y) / tan(angle);
+	while (check_wall(h.x, h.y + check, game))
 		h = vec_add(h, step);
 	player = vec_new(game->player.x, game->player.y);
 	return (vec_len(vec_sub(h, player)));
 }
 
-float	v_intersect(t_map_data *game, float angle)
+static float	v_hit(t_map_data *game, float angle)
 {
 	t_vector	v;
 	t_vector	step;
@@ -101,12 +88,21 @@ float	v_intersect(t_map_data *game, float angle)
 
 	step.x = TILE_SIZE; 
 	step.y = TILE_SIZE * tan(angle);
-	v.x = floor(game->player.x / TILE_SIZE) * TILE_SIZE;
-	check = check_intersect_v(angle, &v.x, &step.x);
-	v.y = game->player.y + (v.x - game->player.x) * tan(angle);
-	if ((angle_x(angle) && step.y < 0) || (!angle_x(angle) && step.y > 0))
+	if ((y_rising(angle) && step.y < 0) || (!y_rising(angle) && step.y > 0))
 		step.y *= -1;
-	while (check_wall(v.x - check, v.y, game))
+	v.x = floor(game->player.x / TILE_SIZE) * TILE_SIZE;
+	if (x_rising(angle)) 
+	{
+		v.x += TILE_SIZE;
+		check = 1;
+	}
+	else
+	{
+		step.x *= -1;
+		check = -1;
+	}
+	v.y = game->player.y + (v.x - game->player.x) * tan(angle);
+	while (check_wall(v.x + check, v.y, game))
 		v = vec_add(v, step);
 	player = vec_new(game->player.x, game->player.y);
 	return (vec_len(vec_sub(v, player)));
@@ -128,8 +124,8 @@ static void	get_hit_part(t_map_data *game, t_ray *ray)
 void	raycasting(t_map_data *game)
 {
 	t_ray		ray;
-	double		h_inter;
-	double		v_inter;
+	double		h_distance;
+	double		v_distance;
 	uint32_t	x;
 
 	x = 0;
@@ -138,13 +134,13 @@ void	raycasting(t_map_data *game)
 	{
 		ray.x = x;
 		ray.h_hit = 0;
-		h_inter = h_intersect(game, angle_norm(ray.angle_rad));
-		v_inter = v_intersect(game, angle_norm(ray.angle_rad));
-		if (v_inter <= h_inter)
-			ray.distance = v_inter;
+		h_distance = h_hit(game, angle_norm(ray.angle_rad));
+		v_distance = v_hit(game, angle_norm(ray.angle_rad));
+		if (v_distance <= h_distance)
+			ray.distance = v_distance;
 		else
 		{
-			ray.distance = h_inter;
+			ray.distance = h_distance;
 			ray.h_hit = 1;
 		}
 		get_hit_part(game, &ray);

@@ -117,19 +117,11 @@ int	parse_args(char **argv, t_map_data	*game);
 /*									raycasting								  */
 /* ************************************************************************** */
 t_vector	vec_new(double x, double y);
-t_vector	vec_zero(void);
 t_vector	vec_from_angle(float angle);
 t_vector	vec_add(t_vector v1, t_vector v2);
 t_vector	vec_sub(t_vector v1, t_vector v2);
 t_vector	vec_mul(t_vector v, double n);
 double		vec_len(t_vector v);
-t_vector	vec_normalize(t_vector v);
-double		vec_dot_product(t_vector v1, t_vector v2);
-t_vector	vec_inverse(t_vector v);
-int			vec_equal(t_vector v1, t_vector v2);
-double		vec_angle(t_vector v);
-t_vector	vec_rotate(t_vector v, int angle);
-void		vec_print(t_vector v);
 void		start_game(t_map_data *game);
 int			init_game(t_map_data *game);
 void 		raycasting(t_map_data *game);

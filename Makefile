@@ -24,9 +24,7 @@ FILES		=	main.c \
 				mlx_execution.c \
 				utils.c \
 				vector_init.c \
-				vector_operations.c \
-				vector_properties.c \
-				vector_rotate.c \
+				vector_utils.c \
 				raycasting.c \
 				rendering.c \
 				coloring.c
