@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/18 15:51:41 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:11:32 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	find_player(t_map_data	*game)
 			if (ft_strchr("NSWE", game->map[y][x]))
 			{
 				if (game->map[y][x] == 'N')
-					game->player.heading = 0 * M_PI;
+					game->player.heading = M_PI;
 				if (game->map[y][x] == 'E')
 					game->player.heading = 90 * M_PI;
 				if (game->map[y][x] == 'S')

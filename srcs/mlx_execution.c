@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/12/17 16:08:29 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:20:29 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,23 @@ void game_exit(t_map_data *game)
     exit(0);
 }
 
+void move_player(t_map_data *game, char *direction)
+{
+    if (strcmp(direction, "UP"))
+        
+}
+
 void mlx_key(mlx_key_data_t keydata, void *param)
 {
     t_map_data *game;
 
     game = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
-    {
         game_exit(game);
+    if ((keydata.key == MLX_KEY_UP || MLX_KEY_W) && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
+    {  
+        move_player(game, "UP");
+
     }
     //add movement here!
 }
