@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:17:14 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/12/18 15:55:05 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:06:28 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int init_game(t_map_data *game)
 
 	// if (find_player_location(game, &p_x, &p_y) == 0)
 	// {
-	// 	printf("find player fail");
 	// 	return (EXIT_PLAYER_SEARCH_FAIL);
 	// }
     game->player.x = game->player.x * TILE_SIZE + TILE_SIZE / 2;
@@ -124,11 +123,15 @@ int init_game(t_map_data *game)
 	game->camera.focal_length = (SCREEN_WIDTH / 2) /
 								tan(game->camera.fov_radians / 2);
 	game->camera.angle_increment = game->camera.fov_radians / SCREEN_WIDTH;
-    if (load_textures(game) == 0)
+	// printf("\nbefore load texture \n");
+	if (load_textures(game) == 0)
 		return (EXIT_TEXTURE_LOAD_FAIL);
+	// printf("\nafter load texture\n");
+
 	if (parse_color(game->floor_color, &(game->textures.floor)) == 0 ||
 		parse_color(game->ceiling_color, &(game->textures.ceiling)) == 0)
 		return (EXIT_PARSE_COLOR_FAIL);
+	// printf("\n after parse_color\n");
 	return(1);
 }
 

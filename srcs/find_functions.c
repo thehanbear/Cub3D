@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/18 16:11:32 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:33:56 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,9 @@ void	find_map(t_map_data	*game)
 	game->e_wall_asset = find_asset(game, "EA ");
 	game->floor_color = find_asset(game, "F ");
 	game->ceiling_color = find_asset(game, "C ");
-	//malloc map here
 	find_ones(game);
-	print_info(game);
-	// (void)(game);
+	// print_info(game);
 }
-
-
 
 char	*find_asset(t_map_data	*game, char	*arg)
 {
@@ -52,9 +48,6 @@ char	*find_asset(t_map_data	*game, char	*arg)
 	}
 	return (NULL);
 }
-			// game->map = (char **)ft_calloc(game->rows + 1, sizeof(char *));
-			// 	if (!game->map)
-			// 		handle_error(EXIT_MAP_INIT_CALLOC_FAIL, game);
 
 int find_no_map(t_map_data *game)
 {
@@ -119,13 +112,13 @@ int	find_player(t_map_data	*game)
 			if (ft_strchr("NSWE", game->map[y][x]))
 			{
 				if (game->map[y][x] == 'N')
-					game->player.heading = M_PI;
+					game->player.heading = 3 * M_PI / 2;
 				if (game->map[y][x] == 'E')
-					game->player.heading = 90 * M_PI;
+					game->player.heading = 0;
 				if (game->map[y][x] == 'S')
-					game->player.heading = 180 * M_PI;
+					game->player.heading = (2.17);
 				if (game->map[y][x] == 'W')
-					game->player.heading = 270 * M_PI;
+					game->player.heading = M_PI;
 				// || game->copy[y][x] == 'C' || game->copy[y][x] == 'P')
 				// printf("");
 				game->player.y = y;
@@ -133,7 +126,7 @@ int	find_player(t_map_data	*game)
 				game->map[y][x] = '0';
 				printf("\nfind_player:\nplayer pos: %d,%d\nplayer heading: %d\n", (int)game->player.y, (int)game->player.x, (int)game->player.heading);
 				P_found++;
-				print_map(game->map);
+				// print_map(game->map);
 			}
 			x++;
 		}
