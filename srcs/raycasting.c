@@ -44,7 +44,8 @@ int	check_wall(float x, float y, t_map_data *game)
 		return (0);
 	x_m = floor (x / TILE_SIZE);
 	y_m = floor (y / TILE_SIZE);
-	if (!game->map[y_m] || x_m >= (int)strlen(game->map[y_m])
+	if (y_m >= game->map_rows || !game->map[y_m]
+		|| x_m >= (int)strlen(game->map[y_m]) || !game->map[y_m][x_m]
 		|| game->map[y_m][x_m] == '1')
 		return (0);
 	return (1);
@@ -57,8 +58,10 @@ static float	h_hit(t_map_data *game, float angle)
 	t_vector	player;
 	int			check;
 
-	step.y = TILE_SIZE;
-	step.x = TILE_SIZE / tan(angle);
+	step = vec_from_angle(angle);
+	if (step.y == 0)
+		return (-1);
+	step = vec_mul(step, TILE_SIZE / step.y);
 	if ((x_rising(angle) && step.x < 0) || (!x_rising(angle) && step.x > 0))
 		step.x *= -1;
 	h.y = floor(game->player.y / TILE_SIZE) * TILE_SIZE;
@@ -86,8 +89,10 @@ static float	v_hit(t_map_data *game, float angle)
 	t_vector	player;
 	int			check;
 
-	step.x = TILE_SIZE; 
-	step.y = TILE_SIZE * tan(angle);
+	step = vec_from_angle(angle);
+	if (step.x == 0)
+		return (-1);
+	step = vec_mul(step, TILE_SIZE / step.x);
 	if ((y_rising(angle) && step.y < 0) || (!y_rising(angle) && step.y > 0))
 		step.y *= -1;
 	v.x = floor(game->player.x / TILE_SIZE) * TILE_SIZE;
@@ -136,7 +141,7 @@ void	raycasting(t_map_data *game)
 		ray.h_hit = 0;
 		h_distance = h_hit(game, angle_norm(ray.angle_rad));
 		v_distance = v_hit(game, angle_norm(ray.angle_rad));
-		if (v_distance <= h_distance)
+		if (h_distance == -1 || (v_distance != -1 && v_distance <= h_distance))
 			ray.distance = v_distance;
 		else
 		{

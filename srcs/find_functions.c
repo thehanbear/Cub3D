@@ -116,7 +116,7 @@ int	find_player(t_map_data	*game)
 				if (game->map[y][x] == 'E')
 					game->player.heading = 0;
 				if (game->map[y][x] == 'S')
-					game->player.heading = (2.17);
+					game->player.heading = M_PI / 2;
 				if (game->map[y][x] == 'W')
 					game->player.heading = M_PI;
 				// || game->copy[y][x] == 'C' || game->copy[y][x] == 'P')
