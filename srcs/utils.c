@@ -117,6 +117,9 @@ int init_game(t_map_data *game)
     game->player.x = game->player.x * TILE_SIZE + TILE_SIZE / 2;
     game->player.y = game->player.y * TILE_SIZE + TILE_SIZE / 2;
     // game->player.heading = M_PI;
+	game->player.rotating = MOVE_STOP;
+	game->player.moving_ahead = MOVE_STOP;
+	game->player.moving_side = MOVE_STOP;
     game->mlx = NULL;
     game->image = NULL;
 	game->camera.fov_radians = (FOV_DEGREES * M_PI) / 180;

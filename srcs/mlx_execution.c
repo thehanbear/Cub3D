@@ -40,6 +40,8 @@ void start_game(t_map_data *game)
 	printf("\nafter mlx_init\n");
     mlx_loop_hook(game->mlx, &game_loop, game);
 	printf("\nafter mlx_loop_hook\n");
+    mlx_loop_hook(game->mlx, &player_loop, game);
+	printf("\nafter mlx_loop_hook\n");
     mlx_key_hook(game->mlx, &mlx_key, game);
 	printf("\nafter mlx_key_hook\n");
     if (game->mlx == NULL)
@@ -49,7 +51,6 @@ void start_game(t_map_data *game)
     mlx_loop(game->mlx);
     printf("\nafter loop\n");
 }
-
 
 void game_exit(t_map_data *game)
 {
@@ -64,12 +65,6 @@ void game_exit(t_map_data *game)
     exit(0);
 }
 
-// void move_player(t_map_data *game, char *direction)
-// {
-//     if (strcmp(direction, "UP"))
-        
-// }
-
 void mlx_key(mlx_key_data_t keydata, void *param)
 {
     t_map_data *game;
@@ -77,11 +72,6 @@ void mlx_key(mlx_key_data_t keydata, void *param)
     game = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
         game_exit(game);
-    // if ((keydata.key == MLX_KEY_UP || MLX_KEY_W) && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
-    // {  
-    //     move_player(game, "UP");
-
-    // }
-    //add movement here!
+	handle_movement_pressed(keydata, game);
+	handle_movement_released(keydata, game);
 }
-
