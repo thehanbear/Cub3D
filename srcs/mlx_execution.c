@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2025/01/13 14:51:16 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:22:39 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void mlx_key(mlx_key_data_t keydata, void *param)
     game = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) 
         game_exit(game);
-	handle_movement_pressed(keydata, game);
-	handle_movement_released(keydata, game);
+    else
+    {
+	    handle_movement_pressed(keydata, game);
+        handle_movement_released(keydata, game);
+    }
 }
