@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/18 15:54:58 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:43:23 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define SCREEN_HEIGHT 600
 # define TILE_SIZE 30
 # define FOV_DEGREES 60
+# define STEP 1
 
 typedef enum s_error_code
 {
