@@ -30,6 +30,7 @@ FILES		=	main.c \
 				raycasting.c \
 				rendering.c \
 				coloring.c \
+				movement.c
 
 SRCDIR		=	srcs
 OBJDIR		=	objs

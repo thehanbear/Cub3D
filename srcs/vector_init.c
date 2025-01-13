@@ -23,5 +23,5 @@ t_vector	vec_new(double x, double y)
 
 t_vector	vec_from_angle(float angle)
 {
-    return (vec_new(cos(angle), -sin(angle)));
+    return (vec_new(cos(angle), sin(angle)));
 }

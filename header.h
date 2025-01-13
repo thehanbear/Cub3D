@@ -26,7 +26,8 @@
 # define SCREEN_HEIGHT 600
 # define TILE_SIZE 30
 # define FOV_DEGREES 60
-# define STEP 1
+# define ROTATION_SPEED 0.02
+# define PLAYER_SPEED 1.5
 
 typedef enum s_error_code
 {
@@ -44,6 +45,17 @@ typedef enum s_error_code
 	EXIT_NO_PLAYER = 211,
 }	t_error;
 
+typedef enum s_movement_direction
+{
+	MOVE_STOP = 0,
+	MOVE_FORWARD = 1,
+	MOVE_BACK = 2,
+	MOVE_LEFT = 3,
+	MOVE_RIGHT = 4,
+	ROT_LEFT = 5,
+	ROT_RIGHT = 6
+}	t_movement_direction;
+
 typedef struct s_vector
 {
 	double	x;
@@ -55,7 +67,20 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	heading;
+	int		rotating;
+	int		moving_ahead;
+	int		moving_side;
 }	t_player;
+
+typedef struct s_keys
+{
+	int	move_forward;
+	int move_back;
+	int move_left;
+	int move_right;
+	int rotate_left;
+	int rotate_right;
+}	t_keys;
 
 typedef struct s_texture
 {
@@ -102,6 +127,7 @@ typedef struct s_map_data
 	mlx_image_t	*image;
 	t_player	player;
 	t_player	temp_player;
+	t_keys		keys_pressed;
 	t_texture	textures;
 	t_camera	camera;
 }   t_map_data;
@@ -160,5 +186,8 @@ void		mlx_key(mlx_key_data_t keydata, void *param);
 void		game_exit(t_map_data *game);
 void		start_game(t_map_data *game);
 void		game_loop(void *param);
+void		player_loop(void *param);
+void		handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game);
+void		handle_movement_released(mlx_key_data_t keydata, t_map_data *game);
 
 #endif
