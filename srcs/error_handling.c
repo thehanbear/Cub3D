@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/18 15:49:38 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:41:55 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int	handle_error(int errno, t_map_data *game)
 		map_free_error(errno, game);
 	if (errno == EXIT_FD_OPEN_ERROR)
 		map_free_error(errno, game);
+	if (errno == EXIT_MAP_INIT_ERROR)
+		map_free_error(errno, game);	
 	if (errno == EXIT_NO_MAP)
 		map_free_error(errno, game);
 	if (errno == EXIT_TEXTURE_LOAD_FAIL)

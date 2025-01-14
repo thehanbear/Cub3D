@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2024/12/19 13:23:59 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:38:30 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	parse_args(char **argv, t_map_data	*game)
 		|| (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 4), ".cub", 4) != 0))
 		return (EXIT_ARG_NAME_ERROR);
 	if (map_parse(argv, game))
+	{
+		printf("no assets\n");
 		return (EXIT_MAP_INIT_ERROR);
+	}
 	if (find_player(game) != 1)
 		return (EXIT_NO_PLAYER);
 	// if (find_player(game) > 1)
@@ -58,9 +61,17 @@ static int	map_parse(char **argv, t_map_data	*game)
     }
 	map_to_str(game, argv[1]);
 	find_map(game);
+
 	if (game->info)
 		free_array(game->info);
 	printf("after clean_info_struct\n");
+	if (game->n_wall_asset == NULL || game->s_wall_asset == NULL ||
+			game->w_wall_asset == NULL || game->e_wall_asset == NULL ||
+				game->ceiling_color == NULL || game->floor_color == NULL)
+	{
+		printf("\nassets incorrectly loaded\n");
+		return (1);
+	}
     return (0);
 }
 

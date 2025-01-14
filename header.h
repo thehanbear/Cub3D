@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/13 14:43:23 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:08:30 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include "libft/libft.h"
 # include "./MLX42/include/MLX42/MLX42.h"
 
-# define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 600
+# define SCREEN_WIDTH 1800
+# define SCREEN_HEIGHT 1600
 # define TILE_SIZE 30
 # define FOV_DEGREES 60
 # define ROTATION_SPEED 0.02
