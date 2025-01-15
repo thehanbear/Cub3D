@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:17:14 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/12/19 14:06:28 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:41:03 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	parse_color(char *color_in, uint32_t *color_out)
 	int *colors_int;
 	int i;
 
+	// printf("inside parse_color: game.color: %s \n", color_in);
 	colors_str = ft_split(color_in, ',');
 	if (!colors_str)
 		return (0);
@@ -92,9 +93,10 @@ static int	parse_color(char *color_in, uint32_t *color_out)
 	while (colors_str[i] && i < 3)
 	{
 		colors_int[i] = ft_atoi(colors_str[i]);
+		// printf("after split: %i\n", colors_int[i]);
 		i++;
 	}
-	free(colors_str);
+	free_array(colors_str);
 	if (i < 3)
 	{
 		free(colors_int);
@@ -104,6 +106,7 @@ static int	parse_color(char *color_in, uint32_t *color_out)
 	free(colors_int);
 	return (1);
 }
+
 
 int init_game(t_map_data *game)
 {
