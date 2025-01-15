@@ -28,11 +28,17 @@ void	move_player(t_map_data *game, double move_x, double move_y)
 
 	int map_grid_x = floor(new_x / TILE_SIZE);
 	int map_grid_y = floor(new_y / TILE_SIZE);
-	if (game->map[map_grid_y][map_grid_x] != '1')
+
+	if (game->map[map_grid_y][map_grid_x] == '1')
 	{
-		game->player.x = new_x;
-		game->player.y = new_y;
+		if (game->map[map_grid_y][(int)floor(game->player.x / TILE_SIZE)] == '1')
+			new_y = game->player.y;
+		if (game->map[(int)floor(game->player.y / TILE_SIZE)][map_grid_x] == '1')
+			new_x = game->player.x;
 	}
+
+	game->player.x = new_x;
+	game->player.y = new_y;
 }
 
 void	player_loop(void *param)
@@ -73,9 +79,11 @@ void	player_loop(void *param)
 
 void	handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game)
 {
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) &&
+		keydata.action == MLX_PRESS)
 		game->player.moving_ahead = MOVE_FORWARD;
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
+	else if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) && 
+		(keydata.action == MLX_PRESS))
 		game->player.moving_ahead = MOVE_BACK;
 	if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
 		game->player.moving_side = MOVE_LEFT;
@@ -89,10 +97,14 @@ void	handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game)
 
 void	handle_movement_released(mlx_key_data_t keydata, t_map_data *game)
 {
-	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_S) && keydata.action == MLX_RELEASE)
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_S ||
+		keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN) &&
+		keydata.action == MLX_RELEASE)
 		game->player.moving_ahead = MOVE_STOP;
-	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D) && keydata.action == MLX_RELEASE)
+	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D) &&
+		keydata.action == MLX_RELEASE)
 		game->player.moving_side = MOVE_STOP;
-	if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT) && keydata.action == MLX_RELEASE)
+	if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT) &&
+		keydata.action == MLX_RELEASE)
 		game->player.rotating = MOVE_STOP;
 }
