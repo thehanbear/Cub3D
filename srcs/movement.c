@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:12:31 by hlee-sun          #+#    #+#             */
-/*   Updated: 2025/01/16 17:21:02 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:04:27 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ static void	move_player(t_map_data *game, double move_x, double move_y)
 {
 	double	new_x;
 	double	new_y;
-	int		map_grid_x;
-	int		map_grid_y;
+	int		map_x;
+	int		map_y;
 
 	new_x = game->player.x + move_x;
 	new_y = game->player.y + move_y;
-	map_grid_x = floor(new_x / TILE_SIZE);
-	map_grid_y = floor(new_y / TILE_SIZE);
-	if (game->map[map_grid_y][map_grid_x] == '1')
+	map_x = floor(new_x / TILE_SIZE);
+	map_y = floor(new_y / TILE_SIZE);
+	if (game->map[map_y][map_x] == '1')
 	{
-		if (game->map[map_grid_y][(int)floor(game->player.x / TILE_SIZE)] == '1')
+		if (game->map[map_y][(int)floor(game->player.x / TILE_SIZE)] == '1')
 			new_y = game->player.y;
-		if (game->map[(int)floor(game->player.y / TILE_SIZE)][map_grid_x] == '1')
+		if (game->map[(int)floor(game->player.y / TILE_SIZE)][map_x] == '1')
 			new_x = game->player.x;
 	}
 	game->player.x = new_x;
@@ -81,11 +81,11 @@ static void	move_player(t_map_data *game, double move_x, double move_y)
    the pressed keys. */
 void	handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game)
 {
-	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) &&
-		keydata.action == MLX_PRESS)
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
+		&& keydata.action == MLX_PRESS)
 		game->player.moving_ahead = MOVE_FORWARD;
-	else if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) && 
-		(keydata.action == MLX_PRESS))
+	else if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN)
+		&& (keydata.action == MLX_PRESS))
 		game->player.moving_ahead = MOVE_BACK;
 	if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
 		game->player.moving_side = MOVE_LEFT;
@@ -101,14 +101,14 @@ void	handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game)
    movement state to stop when keys for movement or rotation are released. */
 void	handle_movement_released(mlx_key_data_t keydata, t_map_data *game)
 {
-	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_S ||
-		keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN) &&
-		keydata.action == MLX_RELEASE)
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_S
+			|| keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN)
+		&& keydata.action == MLX_RELEASE)
 		game->player.moving_ahead = MOVE_STOP;
-	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D) &&
-		keydata.action == MLX_RELEASE)
+	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D)
+		&& keydata.action == MLX_RELEASE)
 		game->player.moving_side = MOVE_STOP;
-	if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT) &&
-		keydata.action == MLX_RELEASE)
+	if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_RIGHT)
+		&& keydata.action == MLX_RELEASE)
 		game->player.rotating = MOVE_STOP;
 }
