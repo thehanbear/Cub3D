@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2024/12/18 15:49:14 by jbremser         ###   ########.fr        #
+#    Updated: 2025/01/16 15:53:06 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ FILES		=	main.c \
 				raycasting.c \
 				rendering.c \
 				coloring.c \
+				utils_movement.c \
+				utils_raycasting.c \
 				movement.c
 
 SRCDIR		=	srcs
