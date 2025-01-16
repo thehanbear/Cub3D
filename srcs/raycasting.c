@@ -3,116 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:26:32 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/11/15 04:58:22 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:24:39 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-float	angle_norm(float angle)
-{
-	if (angle < 0)
-		angle += (2 * M_PI);
-	if (angle > (2 * M_PI))
-		angle -= (2 * M_PI);
-	return (angle);
-}
+static float	h_hit(t_map_data *game, float angle);
+static float	v_hit(t_map_data *game, float angle);
+static void		get_hit_part(t_map_data *game, t_ray *ray);
+void			raycasting(t_map_data *game);
 
-static int	y_rising(float angle)
-{
-	if (angle > 0 && angle < M_PI)
-		return (1);
-	return (0);
-}
-
-static int	x_rising(float angle)
-{
-	if (angle < (M_PI / 2) || angle > (3 * M_PI) / 2)
-		return (1);
-	return (0);
-}
-
-int	check_wall(float x, float y, t_map_data *game)
-{
-	int		x_m;
-	int		y_m;
-
-	if (x < 0 || y < 0)
-		return (0);
-	x_m = floor (x / TILE_SIZE);
-	y_m = floor (y / TILE_SIZE);
-	if (y_m >= game->map_rows || !game->map[y_m]
-		|| x_m >= (int)strlen(game->map[y_m]) || !game->map[y_m][x_m]
-		|| game->map[y_m][x_m] == '1')
-		return (0);
-	return (1);
-}
-
+/* Calculates the horizontal hit distance from the player's position based
+   on the current angle. This function checks the direction of the ray and
+   iterates through the map until it hits a wall, returning the distance to
+   the hit point. */
 static float	h_hit(t_map_data *game, float angle)
 {
 	t_vector	h;
-	t_vector	step;
-	t_vector	player;
 	int			check;
 
-	step = vec_from_angle(angle);
-	if (step.y == 0)
+	game->step = vec_from_angle(angle);
+	if (game->step.y == 0)
 		return (-1);
-	step = vec_mul(step, TILE_SIZE / step.y);
-	if ((x_rising(angle) && step.x < 0) || (!x_rising(angle) && step.x > 0))
-		step.x *= -1;
+	game->step = vec_mul(game->step, TILE_SIZE / game->step.y);
+	if ((x_r(angle) && game->step.x < 0) || (!x_r(angle) && game->step.x > 0))
+		game->step.x *= -1;
 	h.y = floor(game->player.y / TILE_SIZE) * TILE_SIZE;
-	if (y_rising(angle))
+	if (y_r(angle))
 	{
 		h.y += TILE_SIZE;
 		check = 1;
 	}
 	else
 	{
-		step.y *= -1;
+		game->step.y *= -1;
 		check = -1;
 	}
 	h.x = game->player.x + (h.y - game->player.y) / tan(angle);
 	while (check_wall(h.x, h.y + check, game))
-		h = vec_add(h, step);
-	player = vec_new(game->player.x, game->player.y);
-	return (vec_len(vec_sub(h, player)));
+		h = vec_add(h, game->step);
+	game->vector_player = vec_new(game->player.x, game->player.y);
+	return (vec_len(vec_sub(h, game->vector_player)));
 }
 
+/* Calculates the vertical hit distance from the player's position based on
+   the current angle. Similar to `h_hit`, this function traces the ray in the
+   vertical direction and returns the distance to the first wall hit. */
 static float	v_hit(t_map_data *game, float angle)
 {
 	t_vector	v;
-	t_vector	step;
-	t_vector	player;
 	int			check;
 
-	step = vec_from_angle(angle);
-	if (step.x == 0)
+	game->step = vec_from_angle(angle);
+	if (game->step.x == 0)
 		return (-1);
-	step = vec_mul(step, TILE_SIZE / step.x);
-	if ((y_rising(angle) && step.y < 0) || (!y_rising(angle) && step.y > 0))
-		step.y *= -1;
+	game->step = vec_mul(game->step, TILE_SIZE / game->step.x);
+	if ((y_r(angle) && game->step.y < 0) || (!y_r(angle) && game->step.y > 0))
+		game->step.y *= -1;
 	v.x = floor(game->player.x / TILE_SIZE) * TILE_SIZE;
-	if (x_rising(angle)) 
+	if (x_r(angle))
 	{
 		v.x += TILE_SIZE;
 		check = 1;
 	}
 	else
 	{
-		step.x *= -1;
+		game->step.x *= -1;
 		check = -1;
 	}
 	v.y = game->player.y + (v.x - game->player.x) * tan(angle);
 	while (check_wall(v.x + check, v.y, game))
-		v = vec_add(v, step);
-	player = vec_new(game->player.x, game->player.y);
-	return (vec_len(vec_sub(v, player)));
+		v = vec_add(v, game->step);
+	game->vector_player = vec_new(game->player.x, game->player.y);
+	return (vec_len(vec_sub(v, game->vector_player)));
 }
 
+/* Calculates the hit part on the tile (i.e., the exact position on the
+   tile where the ray hit). It updates the `hit_part` of the ray based on
+   whether the horizontal or vertical hit was encountered. */
 static void	get_hit_part(t_map_data *game, t_ray *ray)
 {
 	t_vector	v;
@@ -126,6 +98,10 @@ static void	get_hit_part(t_map_data *game, t_ray *ray)
 	ray->hit_part = ray->hit_part - floor(ray->hit_part);
 }
 
+/* Performs the raycasting loop. For each vertical line of pixels on the screen,
+   it casts rays to calculate the distance to the nearest wall. It compares
+   horizontal and vertical hit distances, determines the closest hit, and
+   then draws the column representing the ray's hit in the window. */
 void	raycasting(t_map_data *game)
 {
 	t_ray		ray;

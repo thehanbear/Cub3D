@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/14 15:08:30 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:47:00 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum s_error_code
 	EXIT_MAP_INIT_ERROR = 203,
 	EXIT_MAP_INIT_CALLOC_FAIL = 204,
 	EXIT_FD_OPEN_ERROR = 205,
-	EXIT_NO_MAP = 206, 
+	EXIT_NO_MAP = 206,
 	EXIT_TEXTURE_LOAD_FAIL = 207,
 	EXIT_PLAYER_SEARCH_FAIL = 208,
 	EXIT_PARSE_COLOR_FAIL = 209,
@@ -75,11 +75,11 @@ typedef struct s_player
 typedef struct s_keys
 {
 	int	move_forward;
-	int move_back;
-	int move_left;
-	int move_right;
-	int rotate_left;
-	int rotate_right;
+	int	move_back;
+	int	move_left;
+	int	move_right;
+	int	rotate_left;
+	int	rotate_right;
 }	t_keys;
 
 typedef struct s_texture
@@ -105,24 +105,29 @@ typedef struct s_ray
 	float		angle_rad;
 	double		distance;
 	double		wall_h;
-	double 		hit_part;
+	double		hit_part;
 	uint32_t	x;
 }	t_ray;
 
 typedef struct s_map_data
 {
-	char    **info;
-	int		rows;
-	int		map_rows;
-	int		map_cols;
-	char	*floor_color;
-	char	*ceiling_color;
-	char	*n_wall_asset;
-	char	*s_wall_asset;
-	char	*e_wall_asset;
-	char	*w_wall_asset;
-	char	**map;
-	char	**copy;
+	int			temp_x;
+	int			temp_y;
+	int			temp_a;
+	t_vector	step;
+	t_vector	vector_player;
+	char		**info;
+	int			rows;
+	int			map_rows;
+	int			map_cols;
+	char		*floor_color;
+	char		*ceiling_color;
+	char		*n_wall_asset;
+	char		*s_wall_asset;
+	char		*e_wall_asset;
+	char		*w_wall_asset;
+	char		**map;
+	char		**copy;
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_player	player;
@@ -130,7 +135,14 @@ typedef struct s_map_data
 	t_keys		keys_pressed;
 	t_texture	textures;
 	t_camera	camera;
-}   t_map_data;
+}	t_map_data;
+
+/* ************************************************************************** */
+/*									coloring								  */
+/* ************************************************************************** */
+uint32_t	get_tex_col(mlx_texture_t *tex, uint32_t x, uint32_t y);
+void		set_img_col(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t col);
+uint32_t	rgba(int r, int g, int b, int a);
 
 /* ************************************************************************** */
 /*									error_handling							  */
@@ -140,54 +152,80 @@ void		clean_info_struct(t_map_data *game);
 void		free_game_struct(t_map_data	*game);
 void		free_array(char **str);
 
+/* ************************************************************************** */
+/*									find_functions							  */
+/* ************************************************************************** */
+int			find_player(t_map_data	*game, int x, int y, int P_found);
+void		find_map(t_map_data	*game);
+
+/* ************************************************************************** */
+/*									minesweep								  */
+/* ************************************************************************** */
+int			minesweep(t_map_data *game);
+
+/* ************************************************************************** */
+/*									mlx_execution							  */
+/* ************************************************************************** */
+void		game_loop(void *param);
+void		start_game(t_map_data *game);
+void		game_exit(t_map_data *game);
+void		mlx_key(mlx_key_data_t keydata, void *param);
+
+/* ************************************************************************** */
+/*									movement								  */
+/* ************************************************************************** */
+void		player_loop(void *param);
+void		handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game);
+void		handle_movement_released(mlx_key_data_t keydata, t_map_data *game);
 
 /* ************************************************************************** */
 /*									parse_args								  */
 /* ************************************************************************** */
 int			parse_args(char **argv, t_map_data	*game);
-void		print_map(char **map);
 
 /* ************************************************************************** */
-/*									find_functions							  */
+/*									raycasting								  */
 /* ************************************************************************** */
-int			find_player(t_map_data	*game);
-void		find_map(t_map_data	*game);
+void		raycasting(t_map_data *game);
+
+/* ************************************************************************** */
+/*									rendering								  */
+/* ************************************************************************** */
+void		draw_column(t_map_data *game, t_ray *ray);
+void		draw_wall_bg(t_map_data *game, t_ray *ray, mlx_texture_t *hit_text);
+
+/* ************************************************************************** */
+/*									utils_movements							  */
+/* ************************************************************************** */
+double		set_move_heading_x(t_map_data	*game, double move_x);
+double		set_move_heading_y(t_map_data	*game, double move_y);
+
+/* ************************************************************************** */
+/*									utils_raycasting						  */
+/* ************************************************************************** */
+float		angle_norm(float angle);
+int			y_r(float angle);
+int			x_r(float angle);
+int			check_wall(float x, float y, t_map_data *game);
 
 /* ************************************************************************** */
 /*									utils									  */
 /* ************************************************************************** */
 int			init_game(t_map_data *game);
-void		print_info(t_map_data *game);
-void		print_map(char **map);
+void		set_heading(t_map_data	*game, int y, int x);
 
 /* ************************************************************************** */
-/*									minesweep								  */
-/* ************************************************************************** */
-int minesweep(t_map_data *game);
-
-
-/* ************************************************************************** */
-/*									raycasting								  */
+/*										vector_init							  */
 /* ************************************************************************** */
 t_vector	vec_new(double x, double y);
 t_vector	vec_from_angle(float angle);
+
+/* ************************************************************************** */
+/*										vector_utils						  */
+/* ************************************************************************** */
 t_vector	vec_add(t_vector v1, t_vector v2);
 t_vector	vec_sub(t_vector v1, t_vector v2);
 t_vector	vec_mul(t_vector v, double n);
 double		vec_len(t_vector v);
-void		start_game(t_map_data *game);
-void 		raycasting(t_map_data *game);
-void 		draw_column(t_map_data *game, t_ray *ray);
-float		angle_norm(float angle);
-uint32_t	get_tex_color(mlx_texture_t *tex, uint32_t x, uint32_t y);
-void		set_image_color(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
-uint32_t	rgba(int r, int g, int b, int a);
-void		mlx_key(mlx_key_data_t keydata, void *param);
-void		game_exit(t_map_data *game);
-void		start_game(t_map_data *game);
-void		game_loop(void *param);
-void		player_loop(void *param);
-void		handle_movement_pressed(mlx_key_data_t keydata, t_map_data *game);
-void		handle_movement_released(mlx_key_data_t keydata, t_map_data *game);
 
 #endif
