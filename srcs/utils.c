@@ -77,13 +77,13 @@ static int	load_textures(t_map_data *game)
 	if (!game->textures.n)
 		return (0);
 	game->textures.s = mlx_load_png(game->s_wall_asset);
-	if (!game->textures.n)
+	if (!game->textures.s)
 		return (0);
 	game->textures.e = mlx_load_png(game->e_wall_asset);
-	if (!game->textures.n)
+	if (!game->textures.e)
 		return (0);
 	game->textures.w = mlx_load_png(game->w_wall_asset);
-	if (!game->textures.n)
+	if (!game->textures.w)
 		return (0);
 	return (1);
 }
