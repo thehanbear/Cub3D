@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/16 17:10:29 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:16:25 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int			find_player(t_map_data	*game, int x, int y, int P_found);
 static char	*find_asset(t_map_data	*game, char	*arg);
 static int	find_no_map(t_map_data *game);
 static void	find_ones(t_map_data *game, int x, int y, int a);
+// static int	find_extras(char **map);
+
 
 /* Finds and stores the assets related to walls, floor, and ceiling in
    the `game` structure. Calls `handle_error` if no valid map is found. */
@@ -31,7 +33,39 @@ void	find_map(t_map_data	*game)
 	if (find_no_map(game))
 		handle_error(EXIT_NO_MAP, game);
 	find_ones(game, game->temp_x, game->temp_y, game->temp_a);
+	// if (find_extras(game->map))
+	// {
+	// 	printf("found extras\n");
+	// 	handle_error(EXIT_NO_MAP, game);
+	// }
 }
+
+// static int	find_extras(char **map)
+// {
+// 	int x;
+// 	int y;
+
+// 	x = 0;
+// 	y = 0;
+// 	while (map[y])
+// 	{
+// 		while (map[y][x])
+// 		{
+// 			if(!ft_strchr("01\t", map[y][x]))
+// 			{
+// 				printf("y.x.: %d, %d \n find_extras failed\n", y, x);
+// 				return (1);
+// 				;
+// 			}
+// 			x++;
+// 		}
+// 		x = 0;
+// 		y++;
+// 	}
+// 	return (0);
+// }
+
+
 
 /* Searches the map for a player character ('N', 'S', 'W', 'E'), sets the
    player's position, and returns the count of found players. */
