@@ -22,8 +22,8 @@
 # include "libft/libft.h"
 # include "./MLX42/include/MLX42/MLX42.h"
 
-# define SCREEN_WIDTH 1800
-# define SCREEN_HEIGHT 1600
+# define SCREEN_WIDTH 1200
+# define SCREEN_HEIGHT 800
 # define TILE_SIZE 30
 # define FOV_DEGREES 60
 # define ROTATION_SPEED 0.02
@@ -43,6 +43,7 @@ typedef enum s_error_code
 	EXIT_PARSE_COLOR_FAIL = 209,
 	EXIT_MINESWEEP_ERROR = 210,
 	EXIT_NO_PLAYER = 211,
+	EXIT_MLX_ERROR = 212
 }	t_error;
 
 typedef enum s_movement_direction
@@ -167,8 +168,7 @@ int			minesweep(t_map_data *game);
 /*									mlx_execution							  */
 /* ************************************************************************** */
 void		game_loop(void *param);
-void		start_game(t_map_data *game);
-void		game_exit(t_map_data *game);
+int			start_game(t_map_data *game);
 void		mlx_key(mlx_key_data_t keydata, void *param);
 
 /* ************************************************************************** */

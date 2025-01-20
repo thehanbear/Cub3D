@@ -59,7 +59,7 @@ static int	map_parse(char **argv, t_map_data	*game)
 		|| game->w_wall_asset == NULL || game->e_wall_asset == NULL
 		|| game->ceiling_color == NULL || game->floor_color == NULL)
 	{
-		printf("\nassets incorrectly loaded\n");
+		write(2, "Assets incorrectly loaded\n", 26);
 		return (1);
 	}
 	return (0);
@@ -99,7 +99,10 @@ static int	map_rows(char *arg)
 	line = NULL;
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
+	{
+		write(2, "Map file not found\n", 19);
 		return (-1);
+	}
 	line = get_next_line(fd);
 	while (line)
 	{

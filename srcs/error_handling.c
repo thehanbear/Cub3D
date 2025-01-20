@@ -56,24 +56,26 @@ void	free_game_struct(t_map_data	*game)
 /* Prints an error message based on the provided error code (`errno`), then
    frees any allocated memory related to the `game` structure and exits the
    program with a failure code. */
-static void	map_free_error(int errno, t_map_data	*game)
+static void	map_free_error(int errno, t_map_data *game)
 {
 	if (errno == EXIT_MAP_INIT_CALLOC_FAIL)
-		printf("Error: Calloc fail\n");
-	if (errno == EXIT_FD_OPEN_ERROR)
-		printf("FD NO OPEN!\n");
-	if (errno == EXIT_NO_MAP)
-		printf("WHERE MAP!\n");
-	if (errno == EXIT_TEXTURE_LOAD_FAIL)
-		printf("Texture loading failed\n");
-	if (errno == EXIT_PLAYER_SEARCH_FAIL)
-		printf("Failed to find player on map\n");
-	if (errno == EXIT_PARSE_COLOR_FAIL)
-		printf("Failed to parse floor or ceiling color\n");
-	if (errno == EXIT_MINESWEEP_ERROR)
-		printf("Minesweep failed: open area on map\n");
-	if (errno == EXIT_NO_PLAYER)
-		printf("Invalid amount of Player(s) found on map\n");
+		write(2, "Error: Calloc fail\n", 19);
+	else if (errno == EXIT_FD_OPEN_ERROR)
+		write(2, "FD NO OPEN!\n", 12);
+	else if (errno == EXIT_NO_MAP)
+		write(2, "WHERE MAP!\n", 11);
+	else if (errno == EXIT_TEXTURE_LOAD_FAIL)
+		write(2, "Texture loading failed\n", 23);
+	else if (errno == EXIT_PLAYER_SEARCH_FAIL)
+		write(2, "Failed to find player on map\n", 29);
+	else if (errno == EXIT_PARSE_COLOR_FAIL)
+		write(2, "Failed to parse floor or ceiling color\n", 39);
+	else if (errno == EXIT_MINESWEEP_ERROR)
+		write(2, "Minesweep failed: open area on map\n", 35);
+	else if (errno == EXIT_NO_PLAYER)
+		write(2, "Invalid amount of Player(s) found on map\n", 41);
+	else if (errno == EXIT_MLX_ERROR)
+		write(2, "Failed to initialize mlx\n", 25);
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -94,9 +96,10 @@ int	handle_error(int errno, t_map_data *game)
 		|| errno == EXIT_MAP_INIT_ERROR || errno == EXIT_NO_MAP
 		|| errno == EXIT_TEXTURE_LOAD_FAIL
 		|| errno == EXIT_PLAYER_SEARCH_FAIL || errno == EXIT_PARSE_COLOR_FAIL
-		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER)
+		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER
+		|| errno == EXIT_MLX_ERROR)
 		map_free_error(errno, game);
-	if (errno == 0)
+	if (errno == 1)
 		return (0);
 	else
 		return (1);

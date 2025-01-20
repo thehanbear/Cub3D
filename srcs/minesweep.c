@@ -28,7 +28,7 @@ static int	sweep(t_map_data *game, int y, int x)
 		!(game->map[y - 1][x + 1]) ||
 		!(game->map[y + 1][x + 1]))
 	{
-		printf("Sweep failed, invalid map!\n");
+		write(2, "Sweep failed, invalid map!\n", 27);
 		return (1);
 	}
 	else
