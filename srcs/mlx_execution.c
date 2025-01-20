@@ -22,13 +22,17 @@ void		mlx_key(mlx_key_data_t keydata, void *param);
 static void	mlx_clean(t_map_data *game)
 {
 	if (game->image != NULL)
-	{
 		mlx_delete_image(game->mlx, game->image);
-	}
+	if (game->textures.n != NULL)
+		mlx_delete_texture(game->textures.n);
+	if (game->textures.s != NULL)
+		mlx_delete_texture(game->textures.s);
+	if (game->textures.e != NULL)
+		mlx_delete_texture(game->textures.e);
+	if (game->textures.w != NULL)
+		mlx_delete_texture(game->textures.w);
 	if (game->mlx != NULL)
-	{
 		mlx_terminate(game->mlx);
-	}
 }
 
 /* Ends game with error. */
