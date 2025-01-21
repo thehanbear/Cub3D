@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/16 17:07:34 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:28:23 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,23 @@ void	free_string(char *str)
    structure itself. */
 void	free_game_struct(t_map_data	*game)
 {
+	printf("inside free_game_struct\n");
 	if (game->map)
 		free_array(game->map);
-	free_string(game->n_wall_asset);
-	free_string(game->s_wall_asset);
-	free_string(game->e_wall_asset);
-	free_string(game->w_wall_asset);
-	free_string(game->ceiling_color);
-	free_string(game->floor_color);
+	if (game->info)
+		free_array(game->info);
+	if (game->n_wall_asset)
+		free_string(game->n_wall_asset);
+	if (game->s_wall_asset)
+		free_string(game->s_wall_asset);
+	if (game->e_wall_asset)
+		free_string(game->e_wall_asset);
+	if (game->w_wall_asset)
+		free_string(game->w_wall_asset);
+	if (game->ceiling_color)
+		free_string(game->ceiling_color);
+	if (game->floor_color)
+		free_string(game->floor_color);
 	if (game)
 		free(game);
 }
@@ -76,6 +85,10 @@ static void	map_free_error(int errno, t_map_data *game)
 		write(2, "Invalid amount of Player(s) found on map\n", 41);
 	else if (errno == EXIT_MLX_ERROR)
 		write(2, "Failed to initialize mlx\n", 25);
+	else if (errno == EXIT_EXTRA_ABC)
+		write(2, "Invalid Map: Extra alphabet letters\n", 36);
+	else if (errno == EXIT_NO_ASSETS)
+		write(2, "Invalid Map: No Assets\n", 23);
 	if (game)
 		free_game_struct(game);
 	exit(2);
@@ -97,7 +110,8 @@ int	handle_error(int errno, t_map_data *game)
 		|| errno == EXIT_TEXTURE_LOAD_FAIL
 		|| errno == EXIT_PLAYER_SEARCH_FAIL || errno == EXIT_PARSE_COLOR_FAIL
 		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER
-		|| errno == EXIT_MLX_ERROR)
+		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC
+		|| errno == EXIT_NO_ASSETS)
 		map_free_error(errno, game);
 	if (errno == 1)
 		return (0);

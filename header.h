@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/16 17:47:00 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:10:17 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ typedef enum s_error_code
 	EXIT_PARSE_COLOR_FAIL = 209,
 	EXIT_MINESWEEP_ERROR = 210,
 	EXIT_NO_PLAYER = 211,
-	EXIT_MLX_ERROR = 212
+	EXIT_MLX_ERROR = 212,
+	EXIT_EXTRA_ABC = 213,
+	EXIT_NO_ASSETS = 214
 }	t_error;
 
 typedef enum s_movement_direction
@@ -199,6 +201,8 @@ void		draw_wall_bg(t_map_data *game, t_ray *ray, mlx_texture_t *hit_text);
 /* ************************************************************************** */
 double		set_move_heading_x(t_map_data	*game, double move_x);
 double		set_move_heading_y(t_map_data	*game, double move_y);
+int			find_extras(char **map);
+
 
 /* ************************************************************************** */
 /*									utils_raycasting						  */

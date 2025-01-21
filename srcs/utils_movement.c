@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:47:08 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/16 17:31:54 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:45:24 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 double	set_move_heading_x(t_map_data	*game, double move_x);
 double	set_move_heading_y(t_map_data	*game, double move_y);
+int		find_extras(char **map);
+
 
 /* Calculates the change in the player's X position based on the movement 
    direction. Movement is adjusted by the player's heading (angle) and speed.*/
@@ -45,4 +47,25 @@ double	set_move_heading_y(t_map_data	*game, double move_y)
 		return (move_y += -sin(game->player.heading) * PLAYER_SPEED);
 	else
 		return (0);
+}
+
+int	find_extras(char **map)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while (map[y])
+	{
+		while (map[y][x])
+		{
+			if(ft_isalpha(map[y][x]) && !(ft_strchr("NSWE", map[y][x])))
+				return (1);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	return (0);
 }

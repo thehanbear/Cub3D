@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/16 17:22:10 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:12:41 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,6 @@ static int	map_parse(char **argv, t_map_data	*game)
 	find_map(game);
 	if (game->info)
 		free_array(game->info);
-	if (game->n_wall_asset == NULL || game->s_wall_asset == NULL
-		|| game->w_wall_asset == NULL || game->e_wall_asset == NULL
-		|| game->ceiling_color == NULL || game->floor_color == NULL)
-	{
-		write(2, "Assets incorrectly loaded\n", 26);
-		return (1);
-	}
 	return (0);
 }
 
