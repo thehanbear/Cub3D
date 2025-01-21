@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:17:14 by hlee-sun          #+#    #+#             */
-/*   Updated: 2025/01/16 17:34:58 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:55:02 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ static void	trim_lb(char *str)
 	str[ft_strlen(str) - 1] = '\0';
 }
 
+// void clean_textures(t_map_data	*game)
+// {
+// 	if (game->textures.n)
+// 		free(game->textures.n)
+// }
+
 /* Loads the textures for the walls (north, south, east, west) from the
    asset file paths provided in the game struct. If any texture fails to
    load, it returns 0 (failure). */
@@ -74,17 +80,15 @@ static int	load_textures(t_map_data *game)
 	trim_lb(game->e_wall_asset);
 	trim_lb(game->w_wall_asset);
 	game->textures.n = mlx_load_png(game->n_wall_asset);
-	if (!game->textures.n)
-		return (0);
 	game->textures.s = mlx_load_png(game->s_wall_asset);
-	if (!game->textures.s)
-		return (0);
 	game->textures.e = mlx_load_png(game->e_wall_asset);
-	if (!game->textures.e)
-		return (0);
 	game->textures.w = mlx_load_png(game->w_wall_asset);
-	if (!game->textures.w)
+	if (!game->textures.w || !game->textures.n
+		|| !game->textures.s || !game->textures.e)
+	{
+		mlx_clean(game);
 		return (0);
+	}
 	return (1);
 }
 

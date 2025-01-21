@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 12:10:17 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:54:20 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ int			minesweep(t_map_data *game);
 void		game_loop(void *param);
 int			start_game(t_map_data *game);
 void		mlx_key(mlx_key_data_t keydata, void *param);
+void		mlx_clean(t_map_data *game);
+
 
 /* ************************************************************************** */
 /*									movement								  */

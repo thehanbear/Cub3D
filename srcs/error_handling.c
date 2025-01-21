@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 12:28:23 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:06:11 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,18 @@ static void	map_free_error(int errno, t_map_data *game);
 void	free_array(char **str)
 {
 	int	y;
-
-	y = 0;
-	while (str[y])
-		free(str[y++]);
-	free(str);
+	if (str)
+	{
+		y = 0;
+		while (str[y])
+		{
+			// printf("Freeing array pointer: %p: str:%s\n", (void *)str, str[y]);
+			// printf("Freeing str[%d]: %s\n", y, str[y]);  // Add logging for each string
+			if (str[y])
+				free(str[y++]);
+		}
+		free(str);
+	}
 }
 
 /* Frees the memory allocated for the string `str` if it's not NULL. */
@@ -42,10 +49,6 @@ void	free_string(char *str)
 void	free_game_struct(t_map_data	*game)
 {
 	printf("inside free_game_struct\n");
-	if (game->map)
-		free_array(game->map);
-	if (game->info)
-		free_array(game->info);
 	if (game->n_wall_asset)
 		free_string(game->n_wall_asset);
 	if (game->s_wall_asset)
@@ -58,8 +61,13 @@ void	free_game_struct(t_map_data	*game)
 		free_string(game->ceiling_color);
 	if (game->floor_color)
 		free_string(game->floor_color);
+	if (game->map)
+		free_array(game->map);
+	if (game->info)
+		free_array(game->info);
 	if (game)
 		free(game);
+	game = NULL;
 }
 
 /* Prints an error message based on the provided error code (`errno`), then
@@ -89,8 +97,12 @@ static void	map_free_error(int errno, t_map_data *game)
 		write(2, "Invalid Map: Extra alphabet letters\n", 36);
 	else if (errno == EXIT_NO_ASSETS)
 		write(2, "Invalid Map: No Assets\n", 23);
+	else if (errno == EXIT_MAP_INIT_ERROR)
+		write(2, "Invalid Map: No FD\n", 19);
 	if (game)
 		free_game_struct(game);
+	if (game->mlx)
+		mlx_clean(game);
 	exit(2);
 }
 
@@ -107,11 +119,10 @@ int	handle_error(int errno, t_map_data *game)
 		write(2, "Invalid File Names\n", 20);
 	if (errno == EXIT_MAP_INIT_CALLOC_FAIL || errno == EXIT_FD_OPEN_ERROR
 		|| errno == EXIT_MAP_INIT_ERROR || errno == EXIT_NO_MAP
-		|| errno == EXIT_TEXTURE_LOAD_FAIL
+		|| errno == EXIT_TEXTURE_LOAD_FAIL || errno == EXIT_NO_ASSETS
 		|| errno == EXIT_PLAYER_SEARCH_FAIL || errno == EXIT_PARSE_COLOR_FAIL
 		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER
-		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC
-		|| errno == EXIT_NO_ASSETS)
+		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC)
 		map_free_error(errno, game);
 	if (errno == 1)
 		return (0);

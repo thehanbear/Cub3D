@@ -6,20 +6,20 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2025/01/16 17:16:55 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:54:02 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static void	mlx_clean(t_map_data *game);
+void		mlx_clean(t_map_data *game);
 static void	game_error_exit(t_map_data *game);
 void		game_loop(void *param);
 int			start_game(t_map_data *game);
 void		mlx_key(mlx_key_data_t keydata, void *param);
 
 /* Deletes the image buffer and cleans up the MLX resources. */
-static void	mlx_clean(t_map_data *game)
+void	mlx_clean(t_map_data *game)
 {
 	if (game->image != NULL)
 		mlx_delete_image(game->mlx, game->image);
