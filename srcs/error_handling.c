@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 16:06:11 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:54:42 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	free_game_struct(t_map_data	*game)
 		free_array(game->map);
 	if (game->info)
 		free_array(game->info);
+	if (game->mlx)
+		mlx_clean(game);
 	if (game)
 		free(game);
 	game = NULL;
@@ -101,8 +103,6 @@ static void	map_free_error(int errno, t_map_data *game)
 		write(2, "Invalid Map: No FD\n", 19);
 	if (game)
 		free_game_struct(game);
-	if (game->mlx)
-		mlx_clean(game);
 	exit(2);
 }
 
