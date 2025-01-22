@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:43:06 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:25:32 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	parse_args(char **argv, t_map_data	*game)
 		|| (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 4), ".cub", 4) != 0))
 		return (EXIT_ARG_NAME_ERROR);
 	if (map_parse(argv, game))
-	{
-		printf("here\n");
 		return (EXIT_MAP_INIT_ERROR);
-	}
 	if (find_player(game, game->temp_x, game->temp_y, game->temp_a) != 1)
 		return (EXIT_NO_PLAYER);
 	if (minesweep(game))

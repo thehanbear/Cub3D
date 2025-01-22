@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:47:08 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:58:21 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:24:23 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,50 @@ int	check_color(char *str)
 	return (check_temp(temp, i));
 }
 
+bool	check_empty_string(char *temp)
+{
+	while (temp)
+	{
+		if (ft_strcmp(temp, " ") || ft_strcmp(temp, "\t"))
+			temp++;
+		else
+			return (1);
+	}
+	return(0);
+}
+
 int	check_temp(char	**temp, int i)
 {
 	int	x;
-
+	int	temp_n;
+		
 	x = 0;
 	while (x < i)
 	{
-		if (!ft_atoi(temp[x]))
+		temp_n = -1;
+		printf("temp[x]:%s\n", temp[x]);
+		// if (ft_isprint(temp[x]))
+		temp_n = ft_atoi(temp[x]);
+		printf("temp_n:%d\n", temp_n);
+		if (check_empty_string(temp[x]))
 		{
+			printf("color value is empty: %s\n", temp[x]);
 			free_array(temp);
 			return (1);
 		}
+
+		if (temp_n < 0 || temp_n > 255)
+		{
+			printf("1:RBG values must be between 0-255: %d\n", temp_n);
+			free_array(temp);
+			return (1);
+		}
+		// if (!ft_atoi(temp[x]))
+		// {
+		// 	printf("2:RBG values must be between 0-255: %s\n", temp[x]);
+		// 	free_array(temp);
+		// 	return (1);
+		// }
 		else
 			x++;
 	}
