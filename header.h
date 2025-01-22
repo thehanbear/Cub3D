@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 15:54:20 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:55:40 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,6 @@ int			start_game(t_map_data *game);
 void		mlx_key(mlx_key_data_t keydata, void *param);
 void		mlx_clean(t_map_data *game);
 
-
 /* ************************************************************************** */
 /*									movement								  */
 /* ************************************************************************** */
@@ -204,7 +203,8 @@ void		draw_wall_bg(t_map_data *game, t_ray *ray, mlx_texture_t *hit_text);
 double		set_move_heading_x(t_map_data	*game, double move_x);
 double		set_move_heading_y(t_map_data	*game, double move_y);
 int			find_extras(char **map);
-
+int			check_temp(char **temp, int i);
+int			check_color(char *str);
 
 /* ************************************************************************** */
 /*									utils_raycasting						  */

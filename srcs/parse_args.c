@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:33:12 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 15:32:13 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:43:06 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ static int	map_parse(char **argv, t_map_data	*game)
 	}
 	map_to_str(game, argv[1]);
 	find_map(game);
-	// if (game->info)
-	// {
-	// 	printf("first info free\n");
-	// 	free_array(game->info);
-	// }
 	return (0);
 }
 

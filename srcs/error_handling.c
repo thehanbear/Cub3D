@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 15:54:42 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:56:08 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ static void	map_free_error(int errno, t_map_data *game);
 void	free_array(char **str)
 {
 	int	y;
+
 	if (str)
 	{
 		y = 0;
 		while (str[y])
 		{
-			// printf("Freeing array pointer: %p: str:%s\n", (void *)str, str[y]);
-			// printf("Freeing str[%d]: %s\n", y, str[y]);  // Add logging for each string
 			if (str[y])
 				free(str[y++]);
 		}
@@ -48,7 +47,6 @@ void	free_string(char *str)
    structure itself. */
 void	free_game_struct(t_map_data	*game)
 {
-	printf("inside free_game_struct\n");
 	if (game->n_wall_asset)
 		free_string(game->n_wall_asset);
 	if (game->s_wall_asset)
@@ -65,8 +63,6 @@ void	free_game_struct(t_map_data	*game)
 		free_array(game->map);
 	if (game->info)
 		free_array(game->info);
-	if (game->mlx)
-		mlx_clean(game);
 	if (game)
 		free(game);
 	game = NULL;
@@ -77,9 +73,7 @@ void	free_game_struct(t_map_data	*game)
    program with a failure code. */
 static void	map_free_error(int errno, t_map_data *game)
 {
-	if (errno == EXIT_MAP_INIT_CALLOC_FAIL)
-		write(2, "Error: Calloc fail\n", 19);
-	else if (errno == EXIT_FD_OPEN_ERROR)
+	if (errno == EXIT_FD_OPEN_ERROR)
 		write(2, "FD NO OPEN!\n", 12);
 	else if (errno == EXIT_NO_MAP)
 		write(2, "WHERE MAP!\n", 11);
@@ -117,7 +111,13 @@ int	handle_error(int errno, t_map_data *game)
 		write(2, "Invalid Arguments\n", 19);
 	if (errno == EXIT_ARG_NAME_ERROR)
 		write(2, "Invalid File Names\n", 20);
-	if (errno == EXIT_MAP_INIT_CALLOC_FAIL || errno == EXIT_FD_OPEN_ERROR
+	if (errno == EXIT_MAP_INIT_CALLOC_FAIL)
+	{
+		write(2, "Error: Calloc fail\n", 19);
+		if (game)
+			free_game_struct(game);
+	}
+	if (errno == EXIT_FD_OPEN_ERROR
 		|| errno == EXIT_MAP_INIT_ERROR || errno == EXIT_NO_MAP
 		|| errno == EXIT_TEXTURE_LOAD_FAIL || errno == EXIT_NO_ASSETS
 		|| errno == EXIT_PLAYER_SEARCH_FAIL || errno == EXIT_PARSE_COLOR_FAIL

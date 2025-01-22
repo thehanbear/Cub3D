@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 15:45:39 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:55:16 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,77 +18,21 @@ static char	*find_asset(t_map_data	*game, char	*arg);
 static int	find_no_map(t_map_data *game);
 static void	find_ones(t_map_data *game, int x, int y, int a);
 
-
-int check_color(char *str) 
-{
-	int len;
-	int i;
-	char **temp;
-
-	len = ft_strlen(str);
-	if (len < 5)
-		return (1);
-	i = 0;
-	temp = ft_split(str, ',');
-	if (!temp)
-	{
-		free_array(temp);
-		return (1);
-	}
-	// if (temp[3])
-	// {
-	// 	printf("temp[3] exists: %s\n", temp[3]);
-	// 	free_array(temp);
-	// 	return (1);
-	// }
-	while (temp[i])
-		i++;
-	if (i != 3)
-	{
-		free_array(temp);
-		return (1);
-	}
-	int x = 0;
-	while (x < i)
-	{
-		if (!ft_atoi(temp[x]))
-			{
-				printf("temp[%i]:%s is not a number\n", x, temp[x]);
-				free_array(temp);
-				return (1);
-			}
-		else
-			x++;
-	}
-	// printf("end of check_color: temp[%i]: %s", i, temp[i]);
-	if (temp)
-		free_array(temp);
-	return (0);
-
-}
- 
-
 /* Finds and stores the assets related to walls, floor, and ceiling in
    the `game` structure. Calls `handle_error` if no valid map is found. */
 void	find_map(t_map_data	*game)
 {
 	if (find_no_map(game))
-	{
-		// printf("here\n");
 		handle_error(EXIT_NO_MAP, game);
-	}
 	game->n_wall_asset = find_asset(game, "NO ");
 	game->s_wall_asset = find_asset(game, "SO ");
 	game->w_wall_asset = find_asset(game, "WE ");
 	game->e_wall_asset = find_asset(game, "EA ");
 	game->floor_color = find_asset(game, "F ");
-	printf("floor: %s\n", game->floor_color);
 	game->ceiling_color = find_asset(game, "C ");
-	printf("ceiling: %s\n", game->ceiling_color);
-
 	if (game->n_wall_asset == NULL || game->s_wall_asset == NULL
 		|| game->w_wall_asset == NULL || game->e_wall_asset == NULL
-		|| check_color(game->floor_color) || check_color(game->ceiling_color)) 
+		|| check_color(game->floor_color) || check_color(game->ceiling_color))
 		handle_error(EXIT_NO_ASSETS, game);
 	find_ones(game, game->temp_x, game->temp_y, game->temp_a);
 	if (find_extras(game->map))

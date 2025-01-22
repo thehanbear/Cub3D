@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:47:08 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 11:45:24 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:58:21 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 double	set_move_heading_x(t_map_data	*game, double move_x);
 double	set_move_heading_y(t_map_data	*game, double move_y);
 int		find_extras(char **map);
-
+int		check_temp(char **temp, int i);
+int		check_color(char *str);
 
 /* Calculates the change in the player's X position based on the movement 
    direction. Movement is adjusted by the player's heading (angle) and speed.*/
@@ -51,8 +52,8 @@ double	set_move_heading_y(t_map_data	*game, double move_y)
 
 int	find_extras(char **map)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
@@ -60,12 +61,58 @@ int	find_extras(char **map)
 	{
 		while (map[y][x])
 		{
-			if(ft_isalpha(map[y][x]) && !(ft_strchr("NSWE", map[y][x])))
+			if (ft_isalpha(map[y][x]) && !(ft_strchr("NSWE", map[y][x])))
 				return (1);
 			x++;
 		}
 		x = 0;
 		y++;
 	}
+	return (0);
+}
+
+int	check_color(char *str)
+{
+	int		len;
+	int		i;
+	char	**temp;
+
+	len = ft_strlen(str);
+	if (len < 5)
+		return (1);
+	i = 0;
+	temp = ft_split(str, ',');
+	if (!temp)
+	{
+		free_array(temp);
+		return (1);
+	}
+	while (temp[i])
+		i++;
+	if (i != 3)
+	{
+		free_array(temp);
+		return (1);
+	}
+	return (check_temp(temp, i));
+}
+
+int	check_temp(char	**temp, int i)
+{
+	int	x;
+
+	x = 0;
+	while (x < i)
+	{
+		if (!ft_atoi(temp[x]))
+		{
+			free_array(temp);
+			return (1);
+		}
+		else
+			x++;
+	}
+	if (temp)
+		free_array(temp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:17:50 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/21 12:21:50 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:42:40 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,11 @@ static int	sweep(t_map_data *game, int y, int x);
 static int	if_empty(t_map_data *game, int y, int x);
 int			minesweep(t_map_data *game);
 
-static int if_empty(t_map_data *game, int y, int x)
+static int	if_empty(t_map_data *game, int y, int x)
 {
-	if ((game->map[y][x] == '\n') || (game->map[y][x] == '\t') ||
-		(game->map[y][x] == ' ') || !(game->map[y][x]))
-	{
-		printf("y.x.: %d, %d: minesweep failed\n", y, x);
+	if ((game->map[y][x] == '\n') || (game->map[y][x] == '\t')
+		|| (game->map[y][x] == ' ') || !(game->map[y][x]))
 		return (1);
-	}
 	else
 		return (0);
 }
@@ -31,15 +28,15 @@ static int if_empty(t_map_data *game, int y, int x)
 /* checks every spot around playable spaces*/
 static int	sweep(t_map_data *game, int y, int x)
 {
-	if (if_empty(game, y, x + 1) ||
-		if_empty(game, y + 1, x + 1) ||
-		if_empty(game, y + 1, x) ||
-		if_empty(game, y - 1, x - 1) ||
-		if_empty(game, y, x - 1) ||
-		if_empty(game, y - 1, x - 1) ||
-		if_empty(game, y + 1, x) ||
-		if_empty(game, y - 1, x + 1) ||
-		if_empty(game, y + 1, x + 1))
+	if (if_empty(game, y, x + 1)
+		|| if_empty(game, y + 1, x + 1)
+		|| if_empty(game, y + 1, x)
+		|| if_empty(game, y - 1, x - 1)
+		|| if_empty(game, y, x - 1)
+		|| if_empty(game, y - 1, x - 1)
+		|| if_empty(game, y + 1, x)
+		|| if_empty(game, y - 1, x + 1)
+		|| if_empty(game, y + 1, x + 1))
 	{
 		return (1);
 	}
@@ -56,7 +53,6 @@ int	minesweep(t_map_data *game)
 
 	y = 0;
 	x = 0;
-	printf("Inside Minesweep\n");
 	while (game->map[y])
 	{
 		while (game->map[y][x])

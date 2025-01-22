@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:51:35 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 15:53:14 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:57:12 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ int	main(int argc, char **argv)
 	if (handle_error(start_game(game), game) == 1)
 		return (1);
 	if (game)
-	{
-		printf("final free_game_struct\n");
 		free_game_struct(game);
-	}
 	return (0);
 }
