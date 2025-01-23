@@ -61,7 +61,7 @@ int	find_extras(char **map)
 	{
 		while (map[y][x])
 		{
-			if (ft_isalpha(map[y][x]) && !(ft_strchr("NSWE", map[y][x])))
+			if (!(ft_strchr("01NSWE \n", map[y][x]))) // && ft_isalpha(map[y][x]))
 				return (1);
 			x++;
 		}
@@ -80,6 +80,13 @@ int	check_color(char *str)
 	len = ft_strlen(str);
 	if (len < 5)
 		return (1);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_strchr(", \n", str[i]) && !ft_isdigit(str[i]))
+			return (1);
+		i++;
+	}
 	i = 0;
 	temp = ft_split(str, ',');
 	if (!temp)
@@ -113,7 +120,7 @@ int	check_temp(char	**temp, int i)
 {
 	int	x;
 	int	temp_n;
-		
+
 	x = 0;
 	while (x < i)
 	{
@@ -131,7 +138,6 @@ int	check_temp(char	**temp, int i)
 
 		if (temp_n < 0 || temp_n > 255)
 		{
-			printf("1:RBG values must be between 0-255: %d\n", temp_n);
 			free_array(temp);
 			return (1);
 		}

@@ -14,7 +14,7 @@
 
 int			init_game(t_map_data *game);
 void		set_heading(t_map_data	*game, int y, int x);
-static void	trim_lb(char *str);
+static int	trim_lb_and_check(char *str);
 static int	load_textures(t_map_data *game);
 static int	parse_color(char *color_in, uint32_t *color_out);
 
@@ -59,30 +59,31 @@ void	set_heading(t_map_data	*game, int y, int x)
 }
 
 /* Trims the last character (newline) from a string. */
-static void	trim_lb(char *str)
+static int	trim_lb_and_check(char *str)
 {
-	str[ft_strlen(str) - 1] = '\0';
-}
+	int fd;
 
-// void clean_textures(t_map_data	*game)
-// {
-// 	if (game->textures.n)
-// 		free(game->textures.n)
-// }
+	str[ft_strlen(str) - 1] = '\0';
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	close (fd);
+	return (1);
+}
 
 /* Loads the textures for the walls (north, south, east, west) from the
    asset file paths provided in the game struct. If any texture fails to
    load, it returns 0 (failure). */
 static int	load_textures(t_map_data *game)
 {
-	trim_lb(game->n_wall_asset);
-	trim_lb(game->s_wall_asset);
-	trim_lb(game->e_wall_asset);
-	trim_lb(game->w_wall_asset);
-	game->textures.n = mlx_load_png(game->n_wall_asset);
-	game->textures.s = mlx_load_png(game->s_wall_asset);
-	game->textures.e = mlx_load_png(game->e_wall_asset);
-	game->textures.w = mlx_load_png(game->w_wall_asset);
+	if (trim_lb_and_check(game->n_wall_asset) == 1)
+		game->textures.n = mlx_load_png(game->n_wall_asset);
+	if (trim_lb_and_check(game->s_wall_asset) == 1)
+		game->textures.s = mlx_load_png(game->s_wall_asset);
+	if (trim_lb_and_check(game->e_wall_asset) == 1)
+		game->textures.e = mlx_load_png(game->e_wall_asset);
+	if (trim_lb_and_check(game->w_wall_asset) == 1)
+		game->textures.w = mlx_load_png(game->w_wall_asset);
 	if (!game->textures.w || !game->textures.n
 		|| !game->textures.s || !game->textures.e)
 	{

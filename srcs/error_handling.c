@@ -90,7 +90,7 @@ static void	map_free_error(int errno, t_map_data *game)
 	else if (errno == EXIT_MLX_ERROR)
 		write(2, "Failed to initialize mlx\n", 25);
 	else if (errno == EXIT_EXTRA_ABC)
-		write(2, "Invalid Map: Extra alphabet letters\n", 36);
+		write(2, "Invalid Map: Extra symbols\n", 27);
 	else if (errno == EXIT_NO_ASSETS)
 		write(2, "Invalid Map: No Assets\n", 23);
 	else if (errno == EXIT_MAP_INIT_ERROR)
@@ -105,6 +105,9 @@ static void	map_free_error(int errno, t_map_data *game)
    that require cleanup, or returns an error code based on the `errno`. */
 int	handle_error(int errno, t_map_data *game)
 {
+	if (errno == 1)
+		return (0);
+	write(2, "Error\n", 6);
 	if (errno == EXIT_ARG_COUNT_ERROR)
 		write(2, "Invalid amount of Args\n", 24);
 	if (errno == EXIT_INVALID_ARGS)
@@ -124,8 +127,5 @@ int	handle_error(int errno, t_map_data *game)
 		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER
 		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC)
 		map_free_error(errno, game);
-	if (errno == 1)
-		return (0);
-	else
-		return (1);
+	return (1);
 }

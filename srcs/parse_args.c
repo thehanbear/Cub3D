@@ -90,10 +90,7 @@ static int	map_rows(char *arg)
 	line = NULL;
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-	{
-		write(2, "Map file not found\n", 19);
 		return (-1);
-	}
 	line = get_next_line(fd);
 	while (line)
 	{

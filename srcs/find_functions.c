@@ -32,8 +32,10 @@ void	find_map(t_map_data	*game)
 	game->ceiling_color = find_asset(game, "C ");
 	if (game->n_wall_asset == NULL || game->s_wall_asset == NULL
 		|| game->w_wall_asset == NULL || game->e_wall_asset == NULL
-		|| check_color(game->floor_color) || check_color(game->ceiling_color))
+		|| game->floor_color == NULL || game->ceiling_color == NULL)
 		handle_error(EXIT_NO_ASSETS, game);
+	if (check_color(game->floor_color) || check_color(game->ceiling_color))
+		handle_error(EXIT_PARSE_COLOR_FAIL, game);
 	find_ones(game, game->temp_x, game->temp_y, game->temp_a);
 	if (find_extras(game->map))
 		handle_error(EXIT_EXTRA_ABC, game);
