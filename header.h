@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:55:40 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:49:30 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef enum s_error_code
 	EXIT_NO_PLAYER = 211,
 	EXIT_MLX_ERROR = 212,
 	EXIT_EXTRA_ABC = 213,
-	EXIT_NO_ASSETS = 214
+	EXIT_NO_ASSETS = 214, 
+	EXIT_BAD_MAP = 215
 }	t_error;
 
 typedef enum s_movement_direction
@@ -165,6 +166,9 @@ void		find_map(t_map_data	*game);
 /*									minesweep								  */
 /* ************************************************************************** */
 int			minesweep(t_map_data *game);
+int			check_line(char *line);
+int 		check_info(t_map_data *game);
+
 
 /* ************************************************************************** */
 /*									mlx_execution							  */

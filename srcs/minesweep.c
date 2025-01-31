@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:17:50 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:42:40 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:52:29 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static int	sweep(t_map_data *game, int y, int x);
 static int	if_empty(t_map_data *game, int y, int x);
 int			minesweep(t_map_data *game);
+int			check_line(char *line);
+int			check_info(t_map_data *game);
 
 static int	if_empty(t_map_data *game, int y, int x)
 {
@@ -65,6 +67,37 @@ int	minesweep(t_map_data *game)
 			x++;
 		}
 		x = 0;
+		y++;
+	}
+	return (0);
+}
+
+int	check_line(char *line)
+{
+	int	x;
+
+	x = 0;
+	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
+		|| !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3)
+		|| !ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
+		return (0);
+	while (line[x] == ' ' || line[x] == '\t')
+		x++;
+	if (line[x] == '1' || line[x] == '\n')
+		return (0);
+	else
+		return (1);
+}
+
+int	check_info(t_map_data	*game)
+{
+	int	y;
+
+	y = 0;
+	while (game->info[y])
+	{
+		if (check_line(game->info[y]))
+			return (1);
 		y++;
 	}
 	return (0);

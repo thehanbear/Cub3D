@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:56:08 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:39:54 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ static void	map_free_error(int errno, t_map_data *game)
 		write(2, "Invalid amount of Player(s) found on map\n", 41);
 	else if (errno == EXIT_MLX_ERROR)
 		write(2, "Failed to initialize mlx\n", 25);
-	else if (errno == EXIT_EXTRA_ABC)
-		write(2, "Invalid Map: Extra symbols\n", 27);
+	else if (errno == EXIT_EXTRA_ABC || errno == EXIT_BAD_MAP)
+		write(2, "Invalid Map: Extra symbols or lines in map\n", 43);
 	else if (errno == EXIT_NO_ASSETS)
 		write(2, "Invalid Map: No Assets\n", 23);
 	else if (errno == EXIT_MAP_INIT_ERROR)
@@ -125,7 +125,8 @@ int	handle_error(int errno, t_map_data *game)
 		|| errno == EXIT_TEXTURE_LOAD_FAIL || errno == EXIT_NO_ASSETS
 		|| errno == EXIT_PLAYER_SEARCH_FAIL || errno == EXIT_PARSE_COLOR_FAIL
 		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER
-		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC)
+		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC
+		|| errno == EXIT_BAD_MAP)
 		map_free_error(errno, game);
 	return (1);
 }

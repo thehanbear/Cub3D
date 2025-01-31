@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/22 16:55:16 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:50:11 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ static int	find_no_map(t_map_data *game);
 static void	find_ones(t_map_data *game, int x, int y, int a);
 
 /* Finds and stores the assets related to walls, floor, and ceiling in
-   the `game` structure. Calls `handle_error` if no valid map is found. */
+   the `game` structure. Calls `handle_error` if no valid map is found.
+	CHECK_INFO FUNCTION FOUND IN MINESWEEP.C*/
 void	find_map(t_map_data	*game)
 {
 	if (find_no_map(game))
 		handle_error(EXIT_NO_MAP, game);
+	if (check_info(game))
+		handle_error(EXIT_BAD_MAP, game);
 	game->n_wall_asset = find_asset(game, "NO ");
 	game->s_wall_asset = find_asset(game, "SO ");
 	game->w_wall_asset = find_asset(game, "WE ");
