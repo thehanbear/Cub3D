@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:11:15 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/31 15:50:11 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:56:43 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,30 @@ int	find_player(t_map_data	*game, int x, int y, int P_found)
    a new string, or NULL if not found. */
 static char	*find_asset(t_map_data	*game, char	*arg)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	char	*out;
 
+	out = NULL;
 	y = 0;
-	x = 0;
 	while (game->info[y])
 	{
+		x = 0;
 		if (!ft_strncmp(&game->info[y][x], arg, ft_strlen(arg)))
 		{
+			if (out)
+			{
+				free(out);
+				return (NULL);
+			}
 			x = ft_strlen(arg) - 1;
 			while (!ft_strncmp(&game->info[y][x], " ", 1))
 				x++;
-			return (ft_strdup(&game->info[y][x]));
+			out = (ft_strdup(&game->info[y][x]));
 		}
 		y++;
 	}
-	return (NULL);
+	return (out);
 }
 
 /* Checks if there is a valid map in the `game` structure by scanning
