@@ -6,15 +6,13 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2025/01/16 15:53:06 by jbremser         ###   ########.fr        #
+#    Updated: 2025/02/06 16:10:24 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	cub3d
 
-FLAGS		=	-Wall -Wextra -Werror -g
-
-MLX42		=	MLX42/build/libmlx42.a
+FLAGS		=	-Wall -Wextra -Werror
 
 MLX42FLAGS	=	-lglfw -L"/usr/local/Cellar/glfw/3.4/lib" -lm
 
@@ -42,6 +40,9 @@ HEADER		=	header.h
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
+MLX_DIR		=	MLX42/build
+MLX42		=	$(MLX_DIR)/libmlx42.a
+
 SRCS		=	$(addprefix $(SRCDIR)/, $(FILES))
 
 OBJS		=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
@@ -53,24 +54,68 @@ ANSI_RESET 	:= 	\033[0m
 
 all: 			$(NAME)
 
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HEADER) 
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c $(HEADER)
 				@mkdir -p $(OBJDIR)
 				@cc $(FLAGS) -o $@ -c $<
 
-$(NAME):		$(OBJS) $(LIBFT)
+$(NAME):		$(MLX42) $(OBJS) $(LIBFT)
 				@cc $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(MLX42) $(MLX42FLAGS)
 				@echo "$(ANSI_CYAN)Compilation Complete: $(NAME) $(ANSI_RESET)"
+				@echo " \n$(ANSI_CYAN)"
+				@echo "               _____"
+				@echo "              /     \\"
+				@echo "              vvvvvvv  /|__/|"
+				@echo "                 I   /-.-   |"
+				@echo "                 I /_____   |      /|/|"
+				@echo "                 J/^ ^ ^ \\  |    /OO  |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /Oo |"
+				@echo "  Compiled!!      \\m___m__|_|    \\m_m_|   \\mm_|"
+				@echo " $(ANSI_RESET)"
 
 $(LIBFT):		
 				@make -C $(LIBFT_DIR)
-				@echo "$(ANSI_CYAN)LIBFT Compiled! $(ANSI_RESET)"
-
+				@echo " \n$(ANSI_BLUE)"
+				@echo "               _____"
+				@echo "              /     \\"
+				@echo "              vvvvvvv  /|__/|"
+				@echo "                 I   /O.O   |"
+				@echo "                 I /_____   |      /|/|"
+				@echo "                 J/^ ^ ^ \\  |    /00  |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oo |"
+				@echo "  LibFT Compiled! \\m___m__|_|    \\m_m_|   \\mm_|"
+				@echo " $(ANSI_RESET)"
+				
+$(MLX42):		
+				@make -C $(MLX_DIR)
+				@echo " \n$(ANSI_BLUE)"
+				@echo "               _____"
+				@echo "              /     \\"
+				@echo "              vvvvvvv  /|__/|"
+				@echo "                 I   /O.O   |"
+				@echo "                 I /_____   |      /|/|"
+				@echo "                 J/^ ^ ^ \\  |    /00  |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oo |"
+				@echo "  MLX Compiled!   \\m___m__|_|    \\m_m_|   \\mm_|"
+				@echo " $(ANSI_RESET)"
 clean:
+				@rm -rf $(MLX42)
 				@rm -rf $(OBJDIR)
 				@make -C $(LIBFT_DIR) clean
-				@echo "$(ANSI_RED)Objects and LIB_FT Cleaned$(ANSI_RESET)"
+				@echo "$(ANSI_RED)MLX42 and Objects and LIB_FT Cleaned$(ANSI_RESET)"
+				@echo " \n$(ANSI_RED)"
+				@echo "               _____"
+				@echo "              /     \\"
+				@echo "              vvvvvvv  /|__/|"
+				@echo "                 I   /O.O   |"
+				@echo "                 I /_____   |      /|/|"
+				@echo "                 J/^ ^ ^ \\  |    /00  |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oo |"
+				@echo "  Cleaned!        \\m___m__|_|    \\m_m_|   \\mm_|"
+				@echo " $(ANSI_RESET)"
+
 
 fclean:			clean
+				@rm -rf $(MLX42)
 				@rm -rf $(NAME)
 				@make -C $(LIBFT_DIR) fclean
 				@echo "$(ANSI_RED)Executable $(NAME) removed$(ANSI_RESET)"

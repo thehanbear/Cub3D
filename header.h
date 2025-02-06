@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:44:21 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/31 17:08:31 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:17:56 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define SCREEN_HEIGHT 800
 # define TILE_SIZE 30
 # define FOV_DEGREES 60
-# define ROTATION_SPEED 0.02
+# define ROTATION_SPEED .02
 # define PLAYER_SPEED 1.5
 
 typedef enum s_error_code
