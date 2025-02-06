@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2025/02/06 16:10:24 by jbremser         ###   ########.fr        #
+#    Updated: 2025/02/06 16:56:13 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,8 @@ HEADER		=	header.h
 LIBFT_DIR	=	./libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
-MLX_DIR		=	MLX42/build
-MLX42		=	$(MLX_DIR)/libmlx42.a
+MLX_DIR		=	./MLX42
+MLX42		=	$(MLX_DIR)/build/libmlx42.a
 
 SRCS		=	$(addprefix $(SRCDIR)/, $(FILES))
 
@@ -86,7 +86,9 @@ $(LIBFT):
 				@echo " $(ANSI_RESET)"
 				
 $(MLX42):		
-				@make -C $(MLX_DIR)
+				@cmake $(MLX_DIR) -B MLX42/build
+				@cmake --build build -j4
+				@make -C $(MLX_DIR)/build
 				@echo " \n$(ANSI_BLUE)"
 				@echo "               _____"
 				@echo "              /     \\"
