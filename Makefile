@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2025/02/06 17:05:33 by jbremser         ###   ########.fr        #
+#    Updated: 2025/02/06 17:16:57 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,8 +68,8 @@ $(NAME):		$(MLX42) $(OBJS) $(LIBFT)
 				@echo "              vvvvvvv  /|__/|"
 				@echo "                 I   /-.-   |"
 				@echo "                 I /_____   |      /|/|"
-				@echo "                 J/^ ^ ^ \\  |    /OO  |    _//|"
-				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /Oo |"
+				@echo "                 J/^ ^ ^ \\  |    /--  |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /-- |"
 				@echo "  Compiled!!      \\m___m__|_|    \\m_m_|   \\mm_|"
 				@echo " $(ANSI_RESET)"
 
@@ -81,8 +81,8 @@ $(LIBFT):
 				@echo "              vvvvvvv  /|__/|"
 				@echo "                 I   /O.O   |"
 				@echo "                 I /_____   |      /|/|"
-				@echo "                 J/^ ^ ^ \\  |    /00  |    _//|"
-				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oo |"
+				@echo "                 J/^ ^ ^ \\  |    /OO  |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /Oo |"
 				@echo "  LibFT Compiled! \\m___m__|_|    \\m_m_|   \\mm_|"
 				@echo " $(ANSI_RESET)"
 				
@@ -97,7 +97,7 @@ $(MLX42):
 				@echo "                 I   /O.O   |"
 				@echo "                 I /_____   |      /|/|"
 				@echo "                 J/^ ^ ^ \\  |    /00  |    _//|"
-				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oo |"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oO |"
 				@echo "  MLX Compiled!   \\m___m__|_|    \\m_m_|   \\mm_|"
 				@echo " $(ANSI_RESET)"
 clean:
@@ -109,10 +109,10 @@ clean:
 				@echo "               _____"
 				@echo "              /     \\"
 				@echo "              vvvvvvv  /|__/|"
-				@echo "                 I   /O.O   |"
+				@echo "                 I   /X.X   |"
 				@echo "                 I /_____   |      /|/|"
-				@echo "                 J/^ ^ ^ \\  |    /00  |    _//|"
-				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /oo |"
+				@echo "                 J/^ ^ ^ \\  |    /x.x |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /xx |"
 				@echo "  Cleaned!        \\m___m__|_|    \\m_m_|   \\mm_|"
 				@echo " $(ANSI_RESET)"
 
