@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2025/02/06 17:16:57 by jbremser         ###   ########.fr        #
+#    Updated: 2025/02/06 17:21:55 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,10 +109,10 @@ clean:
 				@echo "               _____"
 				@echo "              /     \\"
 				@echo "              vvvvvvv  /|__/|"
-				@echo "                 I   /X.X   |"
+				@echo "                 I   /$(ANSI_RESET)X.X$(ANSI_RED)   |"
 				@echo "                 I /_____   |      /|/|"
-				@echo "                 J/^ ^ ^ \\  |    /x.x |    _//|"
-				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /xx |"
+				@echo "                 J/^ ^ ^ \\  |    /$(ANSI_RESET)x.x$(ANSI_RED) |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /$(ANSI_RESET)xx$(ANSI_RED) |"
 				@echo "  Cleaned!        \\m___m__|_|    \\m_m_|   \\mm_|"
 				@echo " $(ANSI_RESET)"
 
@@ -123,6 +123,14 @@ fclean:			clean
 				@rm -rf $(NAME)
 				@make -C $(LIBFT_DIR) fclean
 				@echo "$(ANSI_RED)Executable $(NAME) removed$(ANSI_RESET)"
+				@echo "               _____"
+				@echo "              /     \\"
+				@echo "              vvvvvvv  /|__/|"
+				@echo "                 I   /$(ANSI_RED)X.X$(ANSI_RESET)   |"
+				@echo "                 I /_____   |      /|/|"
+				@echo "                 J/^ ^ ^ \\  |    /$(ANSI_RED)x.x$(ANSI_RESET) |    _//|"
+				@echo "                 |^ ^ ^ ^ |W|   |/^^\\ |   /$(ANSI_RED)xx$(ANSI_RESET) |"
+				@echo "  FCleaned!       \\m___m__|_|    \\m_m_|   \\mm_|"
 
 re:				fclean all
 
