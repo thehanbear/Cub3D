@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2025/02/06 16:56:13 by jbremser         ###   ########.fr        #
+#    Updated: 2025/02/06 17:05:33 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ LIBFT		=	$(LIBFT_DIR)/libft.a
 
 MLX_DIR		=	./MLX42
 MLX42		=	$(MLX_DIR)/build/libmlx42.a
+MLX_BUILD	=	./MLX42/build
 
 SRCS		=	$(addprefix $(SRCDIR)/, $(FILES))
 
@@ -118,6 +119,7 @@ clean:
 
 fclean:			clean
 				@rm -rf $(MLX42)
+				@rm -rf $(MLX_BUILD)
 				@rm -rf $(NAME)
 				@make -C $(LIBFT_DIR) fclean
 				@echo "$(ANSI_RED)Executable $(NAME) removed$(ANSI_RESET)"
