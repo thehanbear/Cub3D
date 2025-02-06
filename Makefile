@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 15:41:02 by jbremser          #+#    #+#              #
-#    Updated: 2025/02/06 17:21:55 by jbremser         ###   ########.fr        #
+#    Updated: 2025/02/06 17:35:57 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,8 +88,8 @@ $(LIBFT):
 				
 $(MLX42):		
 				@cmake $(MLX_DIR) -B MLX42/build
-				@cmake --build build -j4
 				@make -C $(MLX_DIR)/build
+				@cmake --build MLX42/build -j4
 				@echo " \n$(ANSI_BLUE)"
 				@echo "               _____"
 				@echo "              /     \\"
