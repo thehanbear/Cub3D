@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:00:30 by jbremser          #+#    #+#             */
-/*   Updated: 2025/01/31 15:39:54 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:25:03 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,6 @@ int	handle_error(int errno, t_map_data *game)
 		if (game)
 			free_game_struct(game);
 	}
-	if (errno == EXIT_FD_OPEN_ERROR
-		|| errno == EXIT_MAP_INIT_ERROR || errno == EXIT_NO_MAP
-		|| errno == EXIT_TEXTURE_LOAD_FAIL || errno == EXIT_NO_ASSETS
-		|| errno == EXIT_PLAYER_SEARCH_FAIL || errno == EXIT_PARSE_COLOR_FAIL
-		|| errno == EXIT_MINESWEEP_ERROR || errno == EXIT_NO_PLAYER
-		|| errno == EXIT_MLX_ERROR || errno == EXIT_EXTRA_ABC
-		|| errno == EXIT_BAD_MAP)
-		map_free_error(errno, game);
+	map_free_error(errno, game);
 	return (1);
 }
