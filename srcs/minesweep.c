@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:17:50 by jbremser          #+#    #+#             */
-/*   Updated: 2025/02/26 12:56:57 by jbremser         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:02:14 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,13 @@ int			check_info(t_map_data *game);
 
 static int	if_empty(t_map_data *game, int y, int x)
 {
-	if ((game->map[y][x]) == '\0')
-	{
-		
-		printf("x: %d, y: %d \n here\n", x, y);
+	if (game->map[y][0] == '\n')
 		return (1);
-	}
+	if (!(game->map[y][x]))
+		return (1);
 	else if ((game->map[y][x] == '\n')
 		|| (game->map[y][x] == '\t') || (game->map[y][x] == ' '))
-		{
-			printf("there\n");
 		return (1);
-		}
 	else
 		return (0);
 }
